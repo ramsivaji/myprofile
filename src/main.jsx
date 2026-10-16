@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import {
@@ -195,6 +195,7 @@ function App() {
                 <li>Maintained consistent feedback and annotations to help improve the reliability and quality of AI-generated responses.</li>
               </ul>
             </Reveal>
+            <Reveal delay={.1} className="timeline-item"><div className="timeline-marker"><span /></div><div className="timeline-date">DEC 2025 — MAR 2026</div><div className="timeline-main"><div><h3>Research Analyst Intern</h3><p className="timeline-org">Concentrix · Hyderabad</p></div><span className="timeline-pill">INTERNSHIP</span></div><p className="timeline-description">Reviewed AI-generated responses for Apple AI and rated them for accuracy, relevance, and overall quality. Evaluated prompts and outputs, and maintained consistent feedback and annotations to support model improvement.</p></Reveal>
             <Reveal delay={.12} className="timeline-item"><div className="timeline-marker"><span /></div><div className="timeline-date">SEP 2021 — JUL 2025</div><div className="timeline-main"><div><h3>B.Tech — Computer Science Engineering (AI & ML)</h3><p className="timeline-org">Malla Reddy College of Engineering · CGPA 7.0</p></div><span className="timeline-pill">EDUCATION</span></div><p className="timeline-description">Sri Chaitanya Junior College (693 marks, 2019–2021) · Jasmine High School (CGPA 8.0, 2018–2019).</p></Reveal>
           </div>
           <div className="certifications-strip"><span className="certification-label">CERTIFICATIONS</span><span>PMKVY 4.0 – Skill India Certificate (Python Programming / Web Development)</span><span>Udemy – Python Frameworks and Django for Beginners</span></div>
