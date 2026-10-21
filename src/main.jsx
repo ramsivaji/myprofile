@@ -49,11 +49,11 @@ const projects = [
 ];
 
 const skills = [
-  { title: "Programming Languages", logos: [{ name: "Python", mark: "Py" }, { name: "SQL", mark: "SQL" }] },
-  { title: "Backend Frameworks", logos: [{ name: "Django", mark: "dj" }, { name: "Django REST", mark: "DRF" }, { name: "Flask", mark: "fl" }] },
-  { title: "Databases", logos: [{ name: "MySQL", mark: "My" }, { name: "PostgreSQL", mark: "Pg" }] },
-  { title: "Python Libraries", logos: [{ name: "Pandas", mark: "pd" }, { name: "NumPy", mark: "np" }] },
-  { title: "Tools & IDEs", logos: [{ name: "Git", mark: "git" }, { name: "GitHub", mark: "GH" }, { name: "VS Code", mark: "</>" }, { name: "Jupyter", mark: "J" }] }
+  { title: "Programming Languages", logos: [{ name: "Python", file: "python" }, { name: "SQL", symbol: "database" }] },
+  { title: "Backend Frameworks", logos: [{ name: "Django", file: "django" }, { name: "Django REST", symbol: "api" }, { name: "Flask", file: "flask" }] },
+  { title: "Databases", logos: [{ name: "MySQL", file: "mysql" }, { name: "PostgreSQL", file: "postgresql" }] },
+  { title: "Python Libraries", logos: [{ name: "Pandas", file: "pandas" }, { name: "NumPy", file: "numpy" }] },
+  { title: "Tools & IDEs", logos: [{ name: "Git", file: "git" }, { name: "GitHub", file: "github" }, { name: "VS Code", file: "vscode" }, { name: "Jupyter", file: "jupyter" }] }
 ];
 
 function Reveal({ children, delay = 0, className = "" }) {
@@ -184,7 +184,7 @@ function App() {
 
         <section className="section-wrap skills-section" id="skills">
           <Reveal><div className="section-kicker"><span>02 / TOOLKIT</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>Tools of the trade<span className="gradient-text">.</span></h2><p>Skills listed in my resume, organized by focus area.</p></div></Reveal>
-          <div className="skills-grid">{skills.map((skill, i) => <Reveal key={skill.title} delay={i * .06} className="skill-card"><div className="skill-card-heading"><h3>{skill.title}</h3><span>0{i + 1}</span></div><div className="skill-logo-row">{skill.logos.map((logo) => <div className="skill-logo-item" key={logo.name} title={logo.name}><div className={`tech-logo tech-logo-${logo.name.toLowerCase().replaceAll(" ", "-")}`} role="img" aria-label={`${logo.name} logo`}><span>{logo.mark}</span></div><span className="tech-logo-name">{logo.name}</span></div>)}</div></Reveal>)}</div>
+          <div className="skills-grid">{skills.map((skill, i) => <Reveal key={skill.title} delay={i * .06} className="skill-card"><div className="skill-card-heading"><h3>{skill.title}</h3><span>0{i + 1}</span></div><div className="skill-logo-row">{skill.logos.map((logo) => <div className="skill-logo-item" key={logo.name} title={logo.name}><div className={`tech-logo tech-logo-${logo.name.toLowerCase().replaceAll(" ", "-")}`} role="img" aria-label={`${logo.name} logo`}>{logo.file ? <img src={`/tech-logos/${logo.file}.svg`} alt="" /> : logo.symbol === "database" ? <Database size={25} strokeWidth={2.1} /> : <Braces size={25} strokeWidth={2.1} />}</div><span className="tech-logo-name">{logo.name}</span></div>)}</div></Reveal>)}</div>
         </section>
 
         <section className="section-wrap projects-section" id="projects">

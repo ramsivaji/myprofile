@@ -47,3 +47,7 @@
 .light .tech-logo-name{color:#656b7e}
 @media(max-width:640px){.skill-card{min-height:160px}.skill-card-heading{margin-bottom:17px}.skill-logo-row{gap:14px}}
 @media(prefers-reduced-motion:reduce){.tech-logo,.skill-logo-item:hover .tech-logo{transition:none;transform:none}}
+.tech-logo{background:linear-gradient(145deg,#fff 0%,#f0f2f8 60%,#dce1ed 100%);color:var(--logo);box-shadow:0 5px 0 color-mix(in srgb,var(--logo) 42%,#303445),0 9px 14px #0005,inset 1px 1px 0 #ffffff}
+.tech-logo img{position:relative;z-index:1;display:block;width:29px;height:29px;object-fit:contain;filter:drop-shadow(0 1px 1px #0002)}
+.tech-logo svg{position:relative;z-index:1;color:var(--logo)}
+.tech-logo-sql{--logo:#2674aa;--logo-light:#6ec3ed}.tech-logo-django-rest{--logo:#c63c50;--logo-light:#ff777e}
