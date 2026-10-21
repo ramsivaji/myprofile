@@ -3,3 +3,21 @@
 
 .certifications-strip{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:26px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02);font-size:10px;line-height:1.7;color:var(--muted)}.certifications-strip span:not(.certification-label){padding:7px 10px;border:1px solid var(--line);border-radius:7px}.certification-label{font:9px "DM Mono",monospace;letter-spacing:1px;color:#b7a2ff}.project-link-muted{color:var(--muted);cursor:default}.project-content h3{line-height:1.4}.timeline-bullets{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}.timeline-bullets li{position:relative;padding-left:16px;color:var(--muted);font-size:11px;line-height:1.8}.timeline-bullets li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:#a78bfa;box-shadow:0 0 7px #a78bfa88;flex-shrink:0}.timeline-client{color:#c5a8ff;font-weight:700}
 @media(max-width:640px){.certifications-strip{align-items:flex-start;flex-direction:column;gap:8px;padding:14px}}
+
+/* Scroll-powered collectible companions */
+.scroll-figure-rail{position:fixed;z-index:8;top:12vh;bottom:12vh;right:31px;width:1px;pointer-events:none;background:linear-gradient(transparent,#a78bfa38 12%,#a78bfa38 88%,transparent)}
+.scroll-figure{position:fixed;z-index:9;width:54px;height:104px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;pointer-events:none;will-change:top,transform;color:#3b4058;filter:drop-shadow(0 8px 14px #0004)}
+.scroll-figure-right{right:5px}.scroll-figure-left{left:5px;transform:scale(.82)}
+.figure-art{width:48px;height:68px;overflow:visible;animation:figure-bob .42s ease-in-out infinite alternate}
+.figure-shadow{position:absolute;bottom:23px;width:24px;height:5px;border-radius:50%;background:#a78bfa45;filter:blur(3px);animation:figure-shadow .42s ease-in-out infinite alternate}
+.figure-caption{position:relative;margin-top:-1px;padding:3px 5px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--muted);font:6px "DM Mono",monospace;letter-spacing:.7px;white-space:nowrap}
+.figure-arm,.figure-leg{transform-box:fill-box;transform-origin:top center;animation:figure-step .42s ease-in-out infinite alternate}
+.figure-arm-right,.figure-leg-left{animation-delay:-.42s}
+.explorer-art{animation-delay:-.2s}.explorer-art .figure-arm-right,.explorer-art .figure-leg-left{animation-delay:-.2s}
+.light .figure-caption{background:rgba(255,255,255,.96)}
+@keyframes figure-bob{to{transform:translateY(-3px)}}
+@keyframes figure-shadow{to{transform:scaleX(.72);opacity:.55}}
+@keyframes figure-step{from{transform:rotate(-19deg)}to{transform:rotate(19deg)}}
+@media(max-width:900px){.scroll-figure-rail{right:17px}.scroll-figure-right{right:-3px}.scroll-figure-left{left:-3px}}
+@media(max-width:640px){.scroll-figure,.scroll-figure-rail{display:none}}
+@media(prefers-reduced-motion:reduce){.figure-art,.figure-shadow,.figure-arm,.figure-leg{animation:none!important}}
