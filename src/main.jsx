@@ -60,46 +60,15 @@ function Reveal({ children, delay = 0, className = "" }) {
   return <motion.div className={className} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>;
 }
 
-function ScrollFigure({ side, progress }) {
-  const isRobot = side === "right";
-  const top = useTransform(progress, [0, 1], isRobot ? ["13vh", "76vh"] : ["76vh", "13vh"]);
-  const rotate = useTransform(progress, [0, 0.5, 1], isRobot ? [-8, 8, -8] : [8, -8, 8]);
+function ScrollFigure({ progress }) {
+  const top = useTransform(progress, [0, 1], ["10vh", "54vh"]);
+  const rotate = useTransform(progress, [0, 0.5, 1], [-3, 3, -3]);
+  const x = useTransform(progress, [0, 0.5, 1], [0, -18, 0]);
 
   return (
-    <motion.div className={`scroll-figure scroll-figure-${side}`} style={{ top, rotate }} aria-hidden="true">
-      <span className="figure-shadow" />
-      {isRobot ? (
-        <svg className="figure-art robot-art" viewBox="0 0 64 88" fill="none">
-          <path d="M32 4v7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-          <circle cx="32" cy="4" r="3" fill="#f6bd60" />
-          <rect x="17" y="12" width="30" height="25" rx="9" fill="#d9e7ff" stroke="currentColor" strokeWidth="2.5" />
-          <rect x="22" y="19" width="20" height="10" rx="5" fill="#20263b" />
-          <circle cx="27" cy="24" r="2" fill="#81f2ca" /><circle cx="37" cy="24" r="2" fill="#81f2ca" />
-          <path d="M17 21h-5m35 0h5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-          <rect x="19" y="40" width="26" height="24" rx="8" fill="#b49aff" stroke="currentColor" strokeWidth="2.5" />
-          <path d="M25 47h14m-14 6h9" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-          <g className="figure-arm figure-arm-left"><path d="M19 45 11 54l4 8" stroke="#d9e7ff" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="15" cy="63" r="3" fill="#f6bd60"/></g>
-          <g className="figure-arm figure-arm-right"><path d="m45 45 8 9-4 8" stroke="#d9e7ff" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="49" cy="63" r="3" fill="#f6bd60"/></g>
-          <g className="figure-leg figure-leg-left"><path d="m26 64-3 12" stroke="#d9e7ff" strokeWidth="6" strokeLinecap="round"/><path d="M17 78h10" stroke="#81f2ca" strokeWidth="5" strokeLinecap="round"/></g>
-          <g className="figure-leg figure-leg-right"><path d="m38 64 3 12" stroke="#d9e7ff" strokeWidth="6" strokeLinecap="round"/><path d="M39 78h10" stroke="#81f2ca" strokeWidth="5" strokeLinecap="round"/></g>
-        </svg>
-      ) : (
-        <svg className="figure-art explorer-art" viewBox="0 0 64 88" fill="none">
-          <path d="M16 24a16 16 0 0 1 32 0v6H16v-6Z" fill="#ffc18b" stroke="currentColor" strokeWidth="2.5" />
-          <path d="M19 24a13 13 0 0 1 26 0v3H19v-3Z" fill="#263047" />
-          <circle cx="28" cy="23" r="2" fill="#81f2ca" /><circle cx="36" cy="23" r="2" fill="#81f2ca" />
-          <path d="M32 9v5" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-          <rect x="19" y="34" width="26" height="29" rx="9" fill="#8dddf1" stroke="currentColor" strokeWidth="2.5" />
-          <rect x="25" y="41" width="14" height="12" rx="5" fill="#263047" />
-          <path d="M29 47h6" stroke="#ffc18b" strokeWidth="2" strokeLinecap="round" />
-          <g className="figure-arm figure-arm-left"><path d="m20 40-8 10 4 8" stroke="#ffc18b" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="17" cy="59" r="3" fill="#b49aff"/></g>
-          <g className="figure-arm figure-arm-right"><path d="m44 40 8 10-4 8" stroke="#ffc18b" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="47" cy="59" r="3" fill="#b49aff"/></g>
-          <g className="figure-leg figure-leg-left"><path d="m26 63-3 13" stroke="#ffc18b" strokeWidth="6" strokeLinecap="round"/><path d="M17 78h10" stroke="#b49aff" strokeWidth="5" strokeLinecap="round"/></g>
-          <g className="figure-leg figure-leg-right"><path d="m38 63 3 13" stroke="#ffc18b" strokeWidth="6" strokeLinecap="round"/><path d="M39 78h10" stroke="#b49aff" strokeWidth="5" strokeLinecap="round"/></g>
-          <circle cx="13" cy="35" r="2" fill="#f6bd60" /><circle cx="51" cy="33" r="2" fill="#81f2ca" />
-        </svg>
-      )}
-      <span className="figure-caption">{isRobot ? "BOT_01" : "EXPLORER"}</span>
+    <motion.div className="scroll-figure" style={{ top, rotate, x }} aria-hidden="true">
+      <img src="/rama-action-figure.webp" alt="" />
+      <span className="figure-caption">SIVAJI · ON THE MOVE</span>
     </motion.div>
   );
 }
@@ -146,9 +115,8 @@ function App() {
   return (
     <div className={light ? "app light" : "app"}>
       <motion.div className="scroll-progress" style={{ scaleX }} />
-      <div className="scroll-figure-rail" aria-hidden="true"><span /></div>
-      <ScrollFigure side="right" progress={scrollYProgress} />
-      <ScrollFigure side="left" progress={scrollYProgress} />
+      <div className="scroll-figure-rail" aria-hidden="true" />
+      <ScrollFigure progress={scrollYProgress} />
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
       <div className="grid-overlay" />
