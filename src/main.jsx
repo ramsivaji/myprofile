@@ -32,7 +32,7 @@ const projects = [
     number: "04", title: "AP & Telangana Tourism", type: "WEB / TOURISM",
     description: "A React-based tourism website for exploring popular destinations across Andhra Pradesh and Telangana, with state selection, destination information, and a responsive interface.",
     tags: ["React", "Vite", "TypeScript"], icon: Globe2,
-    link: "https://github.com/ramsivaji/AP-TS-Tourism", linkLabel: "View on GitHub", accent: "blue"
+    link: "https://ramsivaji.github.io/discover-south-india/index.html", linkLabel: "Open live site", accent: "blue"
   },
   {
     number: "05", title: "Student Management System", type: "DATABASE / CRUD APP",
