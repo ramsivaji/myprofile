@@ -106,8 +106,8 @@ function App() {
       window.clearTimeout(signTimer);
       idleTimer = window.setTimeout(() => {
         setFigureMode("thinking");
-        signTimer = window.setTimeout(() => setShowHireSign(true), 2000);
-      }, 2000);
+        signTimer = window.setTimeout(() => setShowHireSign(true), 1000);
+      }, 1000);
     };
     resumeRunning();
     window.addEventListener("scroll", resumeRunning, { passive: true });
