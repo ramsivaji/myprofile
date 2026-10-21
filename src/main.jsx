@@ -49,11 +49,11 @@ const projects = [
 ];
 
 const skills = [
-  { icon: Code2, title: "Programming Languages", text: "Python, SQL" },
-  { icon: Server, title: "Backend Frameworks", text: "Django, Django REST Framework (DRF), Flask" },
-  { icon: Database, title: "Databases", text: "MySQL, PostgreSQL" },
-  { icon: Layers3, title: "Python Libraries", text: "Pandas, NumPy" },
-  { icon: Terminal, title: "Tools & IDEs", text: "Git, GitHub, Visual Studio Code, Jupyter Notebook" }
+  { title: "Programming Languages", logos: [{ name: "Python", mark: "Py" }, { name: "SQL", mark: "SQL" }] },
+  { title: "Backend Frameworks", logos: [{ name: "Django", mark: "dj" }, { name: "Django REST", mark: "DRF" }, { name: "Flask", mark: "fl" }] },
+  { title: "Databases", logos: [{ name: "MySQL", mark: "My" }, { name: "PostgreSQL", mark: "Pg" }] },
+  { title: "Python Libraries", logos: [{ name: "Pandas", mark: "pd" }, { name: "NumPy", mark: "np" }] },
+  { title: "Tools & IDEs", logos: [{ name: "Git", mark: "git" }, { name: "GitHub", mark: "GH" }, { name: "VS Code", mark: "</>" }, { name: "Jupyter", mark: "J" }] }
 ];
 
 function Reveal({ children, delay = 0, className = "" }) {
@@ -184,7 +184,7 @@ function App() {
 
         <section className="section-wrap skills-section" id="skills">
           <Reveal><div className="section-kicker"><span>02 / TOOLKIT</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>Tools of the trade<span className="gradient-text">.</span></h2><p>Skills listed in my resume, organized by focus area.</p></div></Reveal>
-          <div className="skills-grid">{skills.map((skill, i) => <Reveal key={skill.title} delay={i * .06} className="skill-card"><div className="skill-icon"><skill.icon size={20} /></div><div><h3>{skill.title}</h3><p>{skill.text}</p></div><ArrowUpRight className="skill-arrow" size={16} /></Reveal>)}</div>
+          <div className="skills-grid">{skills.map((skill, i) => <Reveal key={skill.title} delay={i * .06} className="skill-card"><div className="skill-card-heading"><h3>{skill.title}</h3><span>0{i + 1}</span></div><div className="skill-logo-row">{skill.logos.map((logo) => <div className="skill-logo-item" key={logo.name} title={logo.name}><div className={`tech-logo tech-logo-${logo.name.toLowerCase().replaceAll(" ", "-")}`} role="img" aria-label={`${logo.name} logo`}><span>{logo.mark}</span></div><span className="tech-logo-name">{logo.name}</span></div>)}</div></Reveal>)}</div>
         </section>
 
         <section className="section-wrap projects-section" id="projects">

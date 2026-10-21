@@ -22,3 +22,28 @@
 @media(max-width:900px){.scroll-figure-rail{right:14px}.scroll-figure{right:-36px;width:clamp(150px,24vw,190px);opacity:.82}}
 @media(max-width:640px){.scroll-figure,.scroll-figure-rail{display:none}}
 @media(prefers-reduced-motion:reduce){.figure-frame{animation:none!important}.figure-frame-1{opacity:1}}
+
+/* 3D technology marks in the skills cards */
+.skill-card{display:block;min-height:170px;padding:20px 19px;transition:transform .25s,border-color .25s,background .25s}
+.skill-card-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:21px}
+.skill-card-heading h3{margin:0;font-size:12px;letter-spacing:-.1px}
+.skill-card-heading>span{color:#727991;font:8px "DM Mono",monospace;letter-spacing:1px}
+.skill-logo-row{display:flex;align-items:flex-start;gap:clamp(12px,2vw,22px);flex-wrap:wrap}
+.skill-logo-item{display:flex;min-width:45px;flex-direction:column;align-items:center;gap:10px}
+.tech-logo{--logo:#b7a2ff;--logo-light:#ddcfff;position:relative;isolation:isolate;width:48px;height:45px;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--logo) 48%,transparent);border-radius:12px;background:linear-gradient(145deg,color-mix(in srgb,var(--logo-light) 35%,#fff),var(--logo) 55%,color-mix(in srgb,var(--logo) 70%,#111));color:#fff;transform:perspective(260px) rotateX(13deg) rotateY(-12deg);transform-style:preserve-3d;box-shadow:0 5px 0 color-mix(in srgb,var(--logo) 55%,#141523),0 9px 14px #0005,inset 1px 1px 0 #ffffff70;transition:transform .25s,box-shadow .25s}
+.tech-logo::before{content:"";position:absolute;inset:4px;border-radius:8px;border:1px solid #ffffff45;box-shadow:inset 0 0 12px #fff2;pointer-events:none}
+.tech-logo span{position:relative;z-index:1;font:800 16px/1 "Manrope",sans-serif;letter-spacing:-.8px;text-shadow:0 1px 0 #0005}
+.tech-logo-name{max-width:78px;color:var(--muted);font:8px "DM Mono",monospace;letter-spacing:.1px;text-align:center;white-space:nowrap}
+.skill-logo-item:hover .tech-logo{transform:perspective(260px) rotateX(0) rotateY(0) translateY(-4px);box-shadow:0 8px 0 color-mix(in srgb,var(--logo) 55%,#141523),0 16px 18px #0006,inset 1px 1px 0 #ffffff80}
+.tech-logo-python{--logo:#3776ab;--logo-light:#ffd343}.tech-logo-python span{font-size:17px}
+.tech-logo-sql{--logo:#2674aa;--logo-light:#6ec3ed}.tech-logo-django{--logo:#145d43;--logo-light:#44b78b}.tech-logo-django span{font-size:21px;letter-spacing:-2px}
+.tech-logo-django-rest{--logo:#b92b45;--logo-light:#ff777e}.tech-logo-django-rest span{font-size:12px;letter-spacing:-.5px}
+.tech-logo-flask{--logo:#30313b;--logo-light:#747785}.tech-logo-flask span{font-size:15px}
+.tech-logo-mysql{--logo:#087a9f;--logo-light:#f29111}.tech-logo-mysql span{font-size:14px}
+.tech-logo-postgresql{--logo:#336791;--logo-light:#86b7dc}.tech-logo-pandas{--logo:#302278;--logo-light:#8776e5}.tech-logo-numpy{--logo:#315b97;--logo-light:#71ace0}
+.tech-logo-git{--logo:#b83b2b;--logo-light:#f05032}.tech-logo-git span{font-size:13px}
+.tech-logo-github{--logo:#30313d;--logo-light:#9295a5}.tech-logo-vs-code{--logo:#0879b7;--logo-light:#45c7fa}.tech-logo-vs-code span{font-size:14px;letter-spacing:-2px}
+.tech-logo-jupyter{--logo:#b65814;--logo-light:#f37626}
+.light .tech-logo-name{color:#656b7e}
+@media(max-width:640px){.skill-card{min-height:160px}.skill-card-heading{margin-bottom:17px}.skill-logo-row{gap:14px}}
+@media(prefers-reduced-motion:reduce){.tech-logo,.skill-logo-item:hover .tech-logo{transition:none;transform:none}}
