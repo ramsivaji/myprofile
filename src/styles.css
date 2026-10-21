@@ -18,11 +18,12 @@
 .figure-thought{position:absolute;top:13%;right:2%;z-index:2;width:34px;height:34px;display:grid;place-items:center;border:1px solid #b9a4ff88;border-radius:12px;background:rgba(18,20,32,.88);color:#c5adff;opacity:0;transform:translateY(5px) scale(.82);transition:opacity .35s ease,transform .35s ease;filter:drop-shadow(0 4px 8px #0004)}
 .figure-thought::before,.figure-thought::after{content:"";position:absolute;bottom:-5px;width:5px;height:5px;border:1px solid #b9a4ff88;border-radius:50%;background:#181829}
 .figure-thought::before{left:5px}.figure-thought::after{left:0;bottom:-9px;width:3px;height:3px}
-.figure-hire-sign{position:absolute;z-index:3;left:50%;bottom:26%;padding:7px 9px;border:1px solid #d9c5ff;border-radius:4px;background:linear-gradient(145deg,#fffdf5,#e9e1d4);box-shadow:0 3px 10px #0005;color:#29213b;font:700 7px "DM Mono",monospace;letter-spacing:.1px;white-space:nowrap;opacity:0;transform:translate(-50%,7px) scale(.9);transition:opacity .4s ease,transform .4s ease}
+.figure-hire-sign{position:absolute;z-index:1;left:58%;bottom:29%;padding:7px 9px;border:1px solid #d9c5ff;border-radius:4px;background:linear-gradient(145deg,#fffdf5,#e9e1d4);box-shadow:0 3px 10px #0005;color:#29213b;font:700 7px "DM Mono",monospace;letter-spacing:.1px;white-space:nowrap;opacity:0;transform:translate(-50%,22px) scale(.55) rotateY(78deg);transform-origin:center center;backface-visibility:hidden}
 .figure-hire-sign::after{content:"";position:absolute;top:100%;left:50%;width:2px;height:13px;background:#d9c5ff;transform:translateX(-50%)}
-.figure-hire-sign.is-visible{opacity:1;transform:translate(-50%,0) scale(1)}
+.figure-hire-sign.is-visible{animation:sign-present 1s cubic-bezier(.2,.75,.25,1) both}
+@keyframes sign-present{0%{z-index:1;opacity:0;transform:translate(-50%,22px) scale(.55) rotateY(78deg)}35%{z-index:1;opacity:.85;transform:translate(-50%,5px) scale(.8) rotateY(35deg)}49%{z-index:1;opacity:1;transform:translate(-50%,0) scale(.92) rotateY(0)}50%{z-index:4}100%{z-index:4;opacity:1;transform:translate(-50%,0) scale(1) rotateY(0)}}
 .scroll-figure.is-thinking .figure-sprite{opacity:0;transform:scale(.97)}
-.scroll-figure.is-thinking .figure-thinking{opacity:1;transform:scale(1)}
+.scroll-figure.is-thinking .figure-thinking{z-index:2;opacity:1;transform:scale(1)}
 .scroll-figure.is-thinking .figure-thought{opacity:1;transform:translateY(0) scale(1);animation:thought-float 2.4s ease-in-out .4s infinite}
 .light .figure-caption{background:rgba(255,255,255,.9);color:#514178}
 @keyframes run-frame-1{0%,24.99%{opacity:1}25%,100%{opacity:0}}
