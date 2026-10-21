@@ -71,7 +71,6 @@ function ScrollFigure({ progress, mode, showHireSign }) {
       <img className="figure-thinking" src="/rama-thinking.webp" alt="" />
       <span className="figure-thought"><BrainCircuit size={18} /></span>
       <span className={`figure-hire-sign ${showHireSign ? "is-visible" : ""}`}>I’d love to join your team!</span>
-      <span className="figure-caption">{mode === "thinking" ? "SIVAJI · THINKING" : "SIVAJI · RUNNING"}</span>
     </motion.div>
   );
 }

@@ -13,7 +13,6 @@
 .figure-frame-2{animation:run-frame-2 .52s steps(1,end) infinite}
 .figure-frame-3{animation:run-frame-3 .52s steps(1,end) infinite}
 .figure-frame-4{animation:run-frame-4 .52s steps(1,end) infinite}
-.figure-caption{position:relative;margin-top:-9px;padding:6px 9px;border:1px solid var(--line);border-radius:6px;background:rgba(17,20,31,.88);color:#d7caff;font:8px "DM Mono",monospace;letter-spacing:.8px;white-space:nowrap;backdrop-filter:blur(10px)}
 .figure-thinking{position:absolute;inset:0;width:100%;height:auto;object-fit:contain;opacity:0;transform:scale(.97);transform-origin:center center;transition:opacity .5s ease,transform .5s ease}
 .figure-thought{position:absolute;top:13%;right:2%;z-index:2;width:34px;height:34px;display:grid;place-items:center;border:1px solid #b9a4ff88;border-radius:12px;background:rgba(18,20,32,.88);color:#c5adff;opacity:0;transform:translateY(5px) scale(.82);transition:opacity .35s ease,transform .35s ease;filter:drop-shadow(0 4px 8px #0004)}
 .figure-thought::before,.figure-thought::after{content:"";position:absolute;bottom:-5px;width:5px;height:5px;border:1px solid #b9a4ff88;border-radius:50%;background:#181829}
@@ -25,14 +24,13 @@
 .scroll-figure.is-thinking .figure-sprite{opacity:0;transform:scale(.97)}
 .scroll-figure.is-thinking .figure-thinking{z-index:2;opacity:1;transform:scale(1)}
 .scroll-figure.is-thinking .figure-thought{opacity:1;transform:translateY(0) scale(1);animation:thought-float 2.4s ease-in-out .4s infinite}
-.light .figure-caption{background:rgba(255,255,255,.9);color:#514178}
 @keyframes run-frame-1{0%,24.99%{opacity:1}25%,100%{opacity:0}}
 @keyframes run-frame-2{0%,24.99%,50%,100%{opacity:0}25%,49.99%{opacity:1}}
 @keyframes run-frame-3{0%,49.99%,75%,100%{opacity:0}50%,74.99%{opacity:1}}
 @keyframes run-frame-4{0%,74.99%{opacity:0}75%,100%{opacity:1}}
 @keyframes thought-float{50%{translate:0 -4px}}
 @media(max-width:900px){.scroll-figure-rail{right:14px}.scroll-figure{right:-30px;width:1.5in;opacity:.82}}
-@media(max-width:640px){.scroll-figure-rail{display:none}.scroll-figure{display:flex;right:3px;width:1.5in;z-index:1;opacity:.62;filter:drop-shadow(0 5px 13px #0004)}.figure-caption{margin-top:-6px;padding:4px 6px;font-size:6px;letter-spacing:.45px}.figure-thought{width:24px;height:24px}.figure-thought svg{width:14px;height:14px}.figure-hire-sign{padding:5px;font-size:5px}.figure-hire-sign::after{height:9px}}
+@media(max-width:640px){.scroll-figure-rail{display:none}.scroll-figure{display:flex;right:3px;width:1.5in;z-index:1;opacity:.62;filter:drop-shadow(0 5px 13px #0004)}.figure-thought{width:24px;height:24px}.figure-thought svg{width:14px;height:14px}.figure-hire-sign{padding:5px;font-size:5px}.figure-hire-sign::after{height:9px}}
 @media(prefers-reduced-motion:reduce){.figure-frame{animation:none!important}.figure-frame-1{opacity:1}.figure-sprite,.figure-thinking,.figure-thought{transition:none!important;animation:none!important}}
 
 /* 3D technology marks in the skills cards */
