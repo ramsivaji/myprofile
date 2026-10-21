@@ -5,7 +5,7 @@ import {
   ArrowDownRight, ArrowRight, ArrowUpRight, BrainCircuit, Braces, Check,
   ChevronDown, Code2, Copy, ExternalLink, Github, Globe2, Layers3, Mail,
   Menu, Moon, MousePointer2, Play, Rocket, Send, Sparkles, Sun, Terminal,
-  X, Zap, Database, Server, Smartphone, Eye, CarFront
+  X, Zap, Database, Server, Smartphone, Eye, CarFront, PhoneCall
 } from "lucide-react";
 import "./styles.css";
 
@@ -62,15 +62,18 @@ function Reveal({ children, delay = 0, className = "" }) {
 
 function ScrollFigure({ progress, mode, showHireSign }) {
   const top = useTransform(progress, [0, 1], ["10vh", "54vh"]);
+  const isThinking = mode === "thinking" || mode === "calling";
 
   return (
-    <motion.div className={`scroll-figure ${mode === "thinking" ? "is-thinking" : ""}`} style={{ top }} aria-hidden="true">
+    <motion.div className={`scroll-figure ${isThinking ? "is-thinking" : ""} ${mode === "calling" ? "is-calling" : ""}`} style={{ top }} aria-hidden="true">
       <div className="figure-sprite">
         {[1, 2, 3, 4].map((frame) => <img key={frame} className={`figure-frame figure-frame-${frame}`} src={`/rama-run-${frame}.webp`} alt="" />)}
       </div>
       <img className="figure-thinking" src="/rama-thinking.webp" alt="" />
       <span className="figure-thought"><BrainCircuit size={18} /></span>
       <span className={`figure-hire-sign ${showHireSign ? "is-visible" : ""}`}>I’d love to join your team!</span>
+      <span className="figure-phone"><PhoneCall size={17} /></span>
+      <span className="figure-callout">CALL ME</span>
     </motion.div>
   );
 }
@@ -84,6 +87,7 @@ function App() {
   const [codeOutput, setCodeOutput] = useState(false);
   const [figureMode, setFigureMode] = useState("running");
   const [showHireSign, setShowHireSign] = useState(false);
+  const [isContactVisible, setIsContactVisible] = useState(false);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
   const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
@@ -96,8 +100,26 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const contactSection = document.getElementById("contact");
+    if (!contactSection) return undefined;
+    const observer = new IntersectionObserver(([entry]) => setIsContactVisible(entry.isIntersecting), { threshold: 0.2 });
+    observer.observe(contactSection);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     let idleTimer;
     let signTimer;
+    if (isContactVisible) {
+      window.clearTimeout(idleTimer);
+      window.clearTimeout(signTimer);
+      setShowHireSign(false);
+      setFigureMode("calling");
+      return () => {
+        window.clearTimeout(idleTimer);
+        window.clearTimeout(signTimer);
+      };
+    }
     const resumeRunning = () => {
       setFigureMode("running");
       setShowHireSign(false);
@@ -115,7 +137,7 @@ function App() {
       window.clearTimeout(signTimer);
       window.removeEventListener("scroll", resumeRunning);
     };
-  }, []);
+  }, [isContactVisible]);
 
   const categories = ["All", "Backend", "AI / ML", "Web App", "Database", "Embedded / IoT"];
   const visibleProjects = projects.filter((p) => {

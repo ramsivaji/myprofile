@@ -21,6 +21,14 @@
 .figure-hire-sign::after{content:"";position:absolute;top:100%;left:50%;width:2px;height:13px;background:#d9c5ff;transform:translateX(-50%)}
 .figure-hire-sign.is-visible{animation:sign-present 1s cubic-bezier(.2,.75,.25,1) both}
 @keyframes sign-present{0%{z-index:1;opacity:0;transform:translate(-50%,22px) scale(.55) rotateY(78deg)}35%{z-index:1;opacity:.85;transform:translate(-50%,5px) scale(.8) rotateY(35deg)}49%{z-index:1;opacity:1;transform:translate(-50%,0) scale(.92) rotateY(0)}50%{z-index:4}100%{z-index:4;opacity:1;transform:translate(-50%,0) scale(1) rotateY(0)}}
+.figure-phone{position:absolute;z-index:5;left:66%;bottom:29%;display:grid;place-items:center;width:27px;height:27px;border:1px solid #9be4c0;border-radius:9px;background:#101a1b;color:#9be4c0;opacity:0;transform:translateY(7px) rotate(-18deg) scale(.7);filter:drop-shadow(0 3px 8px #0005)}
+.figure-callout{position:absolute;z-index:5;left:39%;bottom:40%;padding:5px 7px;border:1px solid #9be4c088;border-radius:7px;background:rgba(16,26,27,.94);color:#baf2d2;font:700 7px "DM Mono",monospace;letter-spacing:.7px;white-space:nowrap;opacity:0;transform:translateY(6px) scale(.8);filter:drop-shadow(0 3px 8px #0004)}
+.figure-callout::after{content:"";position:absolute;right:-4px;bottom:5px;width:7px;height:7px;border-right:1px solid #9be4c088;border-bottom:1px solid #9be4c088;background:#101a1b;transform:rotate(-45deg)}
+.scroll-figure.is-calling .figure-sprite{opacity:0;transform:scale(.97)}
+.scroll-figure.is-calling .figure-thought,.scroll-figure.is-calling .figure-hire-sign{opacity:0!important;animation:none}
+.scroll-figure.is-calling .figure-phone{opacity:1;transform:translateY(0) rotate(-12deg) scale(1);animation:phone-ring 1.1s ease-in-out infinite}
+.scroll-figure.is-calling .figure-callout{opacity:1;transform:translateY(0) scale(1);transition:opacity .35s ease .15s,transform .35s ease .15s}
+@keyframes phone-ring{0%,100%{rotate:0deg}18%{rotate:-14deg}36%{rotate:12deg}54%{rotate:-9deg}72%{rotate:5deg}}
 .scroll-figure.is-thinking .figure-sprite{opacity:0;transform:scale(.97)}
 .scroll-figure.is-thinking .figure-thinking{z-index:2;opacity:1;transform:scale(1)}
 .scroll-figure.is-thinking .figure-thought{opacity:1;transform:translateY(0) scale(1);animation:thought-float 2.4s ease-in-out .4s infinite}
@@ -30,7 +38,7 @@
 @keyframes run-frame-4{0%,74.99%{opacity:0}75%,100%{opacity:1}}
 @keyframes thought-float{50%{translate:0 -4px}}
 @media(max-width:900px){.scroll-figure-rail{right:14px}.scroll-figure{right:-30px;width:1.5in;opacity:.82}}
-@media(max-width:640px){.scroll-figure-rail{display:none}.scroll-figure{display:flex;right:3px;width:1.5in;z-index:1;opacity:.62;filter:drop-shadow(0 5px 13px #0004)}.figure-thought{width:24px;height:24px}.figure-thought svg{width:14px;height:14px}.figure-hire-sign{padding:5px;font-size:5px}.figure-hire-sign::after{height:9px}}
+@media(max-width:640px){.scroll-figure-rail{display:none}.scroll-figure{display:flex;right:3px;width:1.5in;z-index:1;opacity:.62;filter:drop-shadow(0 5px 13px #0004)}.figure-thought{width:24px;height:24px}.figure-thought svg{width:14px;height:14px}.figure-hire-sign{padding:5px;font-size:5px}.figure-hire-sign::after{height:9px}.figure-phone{width:22px;height:22px}.figure-phone svg{width:14px;height:14px}.figure-callout{padding:4px 5px;font-size:5px}}
 @media(prefers-reduced-motion:reduce){.figure-frame{animation:none!important}.figure-frame-1{opacity:1}.figure-sprite,.figure-thinking,.figure-thought{transition:none!important;animation:none!important}}
 
 /* 3D technology marks in the skills cards */
