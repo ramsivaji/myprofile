@@ -60,7 +60,7 @@ function Reveal({ children, delay = 0, className = "" }) {
   return <motion.div className={className} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>;
 }
 
-function ScrollFigure({ progress, mode }) {
+function ScrollFigure({ progress, mode, showHireSign }) {
   const top = useTransform(progress, [0, 1], ["10vh", "54vh"]);
 
   return (
@@ -70,6 +70,7 @@ function ScrollFigure({ progress, mode }) {
       </div>
       <img className="figure-thinking" src="/rama-thinking.webp" alt="" />
       <span className="figure-thought"><BrainCircuit size={18} /></span>
+      <span className={`figure-hire-sign ${showHireSign ? "is-visible" : ""}`}>I’d love to join your team!</span>
       <span className="figure-caption">{mode === "thinking" ? "SIVAJI · THINKING" : "SIVAJI · RUNNING"}</span>
     </motion.div>
   );
@@ -83,6 +84,7 @@ function App() {
   const [activeTool, setActiveTool] = useState("playground");
   const [codeOutput, setCodeOutput] = useState(false);
   const [figureMode, setFigureMode] = useState("running");
+  const [showHireSign, setShowHireSign] = useState(false);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
   const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
@@ -96,15 +98,22 @@ function App() {
 
   useEffect(() => {
     let idleTimer;
+    let signTimer;
     const resumeRunning = () => {
       setFigureMode("running");
+      setShowHireSign(false);
       window.clearTimeout(idleTimer);
-      idleTimer = window.setTimeout(() => setFigureMode("thinking"), 3000);
+      window.clearTimeout(signTimer);
+      idleTimer = window.setTimeout(() => {
+        setFigureMode("thinking");
+        signTimer = window.setTimeout(() => setShowHireSign(true), 2000);
+      }, 3000);
     };
     resumeRunning();
     window.addEventListener("scroll", resumeRunning, { passive: true });
     return () => {
       window.clearTimeout(idleTimer);
+      window.clearTimeout(signTimer);
       window.removeEventListener("scroll", resumeRunning);
     };
   }, []);
@@ -135,7 +144,7 @@ function App() {
     <div className={light ? "app light" : "app"}>
       <motion.div className="scroll-progress" style={{ scaleX }} />
       <div className="scroll-figure-rail" aria-hidden="true" />
-      <ScrollFigure progress={smoothScrollProgress} mode={figureMode} />
+      <ScrollFigure progress={smoothScrollProgress} mode={figureMode} showHireSign={showHireSign} />
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
       <div className="grid-overlay" />
