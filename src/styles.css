@@ -28,7 +28,7 @@
 @keyframes run-frame-4{0%,74.99%{opacity:0}75%,100%{opacity:1}}
 @keyframes thought-float{50%{translate:0 -4px}}
 @media(max-width:900px){.scroll-figure-rail{right:14px}.scroll-figure{right:-36px;width:clamp(150px,24vw,190px);opacity:.82}}
-@media(max-width:640px){.scroll-figure,.scroll-figure-rail{display:none}}
+@media(max-width:640px){.scroll-figure-rail{display:none}.scroll-figure{display:flex;right:3px;width:clamp(92px,25vw,116px);z-index:1;opacity:.62;filter:drop-shadow(0 5px 13px #0004)}.figure-caption{margin-top:-6px;padding:4px 6px;font-size:6px;letter-spacing:.45px}.figure-thought{width:27px;height:27px}.figure-thought svg{width:15px;height:15px}}
 @media(prefers-reduced-motion:reduce){.figure-frame{animation:none!important}.figure-frame-1{opacity:1}.figure-sprite,.figure-thinking,.figure-thought{transition:none!important;animation:none!important}}
 
 /* 3D technology marks in the skills cards */
