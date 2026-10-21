@@ -20,7 +20,7 @@ const projects = [
     number: "02", title: "PDF Maker", type: "WEB APP / DOCUMENT TOOLS",
     description: "A browser-based PDF conversion tool with a frontend and Python backend, organized into separate application components.",
     tags: ["Python", "FastAPI", "HTML", "CSS"], icon: Layers3,
-    link: "https://github.com/ramsivaji/pdf-maker", linkLabel: "View on GitHub", accent: "blue"
+    link: "https://pdf-maker-chi.vercel.app/", linkLabel: "Open live app", accent: "blue"
   },
   {
     number: "03", title: "Automated Road Damage Detection", type: "AI / COMPUTER VISION",
