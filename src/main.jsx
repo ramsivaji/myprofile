@@ -62,13 +62,13 @@ function Reveal({ children, delay = 0, className = "" }) {
 
 function ScrollFigure({ progress }) {
   const top = useTransform(progress, [0, 1], ["10vh", "54vh"]);
-  const rotate = useTransform(progress, [0, 0.5, 1], [-3, 3, -3]);
-  const x = useTransform(progress, [0, 0.5, 1], [0, -18, 0]);
 
   return (
-    <motion.div className="scroll-figure" style={{ top, rotate, x }} aria-hidden="true">
-      <img src="/rama-action-figure.webp" alt="" />
-      <span className="figure-caption">SIVAJI · ON THE MOVE</span>
+    <motion.div className="scroll-figure" style={{ top }} aria-hidden="true">
+      <div className="figure-sprite">
+        {[1, 2, 3, 4].map((frame) => <img key={frame} className={`figure-frame figure-frame-${frame}`} src={`/rama-run-${frame}.webp`} alt="" />)}
+      </div>
+      <span className="figure-caption">SIVAJI · RUNNING</span>
     </motion.div>
   );
 }
@@ -82,7 +82,8 @@ function App() {
   const [codeOutput, setCodeOutput] = useState(false);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const scaleX = smoothScrollProgress;
 
   useEffect(() => {
     const move = (e) => setCursor({ x: e.clientX, y: e.clientY });
@@ -116,7 +117,7 @@ function App() {
     <div className={light ? "app light" : "app"}>
       <motion.div className="scroll-progress" style={{ scaleX }} />
       <div className="scroll-figure-rail" aria-hidden="true" />
-      <ScrollFigure progress={scrollYProgress} />
+      <ScrollFigure progress={smoothScrollProgress} />
       <div className="ambient ambient-one" />
       <div className="ambient ambient-two" />
       <div className="grid-overlay" />
