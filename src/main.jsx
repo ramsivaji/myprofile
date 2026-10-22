@@ -14,7 +14,7 @@ const projects = [
     number: "01", title: "Hospital Appointment & Patient Management", type: "BACKEND / REST API",
     description: "A backend system for managing patients, doctors, appointments, and medical records, with authentication, role-based access, validation, search, filtering, pagination, and PostgreSQL integration.",
     tags: ["Python", "Django", "Django REST Framework", "PostgreSQL"], icon: Server,
-    link: null, linkLabel: "Project from resume", accent: "violet"
+    link: "https://sivajicarepoint.netlify.app/", linkLabel: "Open live app", accent: "violet"
   },
   {
     number: "02", title: "PDF Maker", type: "WEB APP / DOCUMENT TOOLS",
