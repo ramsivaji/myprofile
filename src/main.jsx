@@ -92,6 +92,9 @@ function App() {
   const { scrollYProgress } = useScroll();
   const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const scaleX = smoothScrollProgress;
+  const heroObjectDrop = useTransform(smoothScrollProgress, [0, 0.22], [0, 250]);
+  const heroOrbDrop = useTransform(smoothScrollProgress, [0, 0.22], [0, 180]);
+  const heroRingDrop = useTransform(smoothScrollProgress, [0, 0.22], [0, 320]);
 
   useEffect(() => {
     const move = (e) => setCursor({ x: e.clientX, y: e.clientY });
@@ -201,6 +204,17 @@ function App() {
             </motion.div>
           </div>
           <div className="hero-visual" aria-label="Animated developer illustration">
+            <motion.div className="hero-object hero-object-cube" style={{ y: heroObjectDrop }} aria-hidden="true">
+              <motion.div className="cube-3d" animate={{ rotateX: [-18, 8, -18], rotateY: [-32, 20, -32], rotateZ: [-8, 5, -8] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}>
+                <span className="cube-face cube-front">&lt;/&gt;</span><span className="cube-face cube-back">✦</span><span className="cube-face cube-right" /><span className="cube-face cube-left" /><span className="cube-face cube-top" /><span className="cube-face cube-bottom" />
+              </motion.div>
+            </motion.div>
+            <motion.div className="hero-object hero-object-orb" style={{ y: heroOrbDrop }} aria-hidden="true">
+              <motion.div className="cobalt-orb" animate={{ rotateY: [0, 180, 360], scale: [1, 1.06, 1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}><span>✳</span></motion.div>
+            </motion.div>
+            <motion.div className="hero-object hero-object-ring" style={{ y: heroRingDrop }} aria-hidden="true">
+              <motion.div className="cobalt-ring" animate={{ rotateZ: [0, 360], rotateX: [64, 54, 64] }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }}><i /></motion.div>
+            </motion.div>
             <motion.div className="orbit orbit-one" animate={{ rotate: 360 }} transition={{ duration: 28, repeat: Infinity, ease: "linear" }} />
             <motion.div className="orbit orbit-two" animate={{ rotate: -360 }} transition={{ duration: 36, repeat: Infinity, ease: "linear" }} />
             <motion.div className="floating-chip chip-python" animate={{ y: [0, -10, 0], rotate: [-3, 2, -3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}><span className="chip-logo python-logo">Py</span><span>Python</span></motion.div>
