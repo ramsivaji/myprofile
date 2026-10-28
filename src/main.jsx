@@ -206,19 +206,20 @@ function App() {
           <div className="hero-visual" aria-label="Animated developer illustration">
             <motion.div className="hero-object hero-object-cube" style={{ y: heroObjectDrop }} aria-hidden="true">
               <motion.div className="cube-3d" animate={{ rotateX: [-18, 8, -18], rotateY: [-32, 20, -32], rotateZ: [-8, 5, -8] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}>
-                <span className="cube-face cube-front">&lt;/&gt;</span><span className="cube-face cube-back">✦</span><span className="cube-face cube-right" /><span className="cube-face cube-left" /><span className="cube-face cube-top" /><span className="cube-face cube-bottom" />
+                <span className="cube-face cube-front"><span className="tool-logo-plate"><img src="/tech-logos/python.svg" alt="" /></span></span><span className="cube-face cube-back">✦</span><span className="cube-face cube-right" /><span className="cube-face cube-left" /><span className="cube-face cube-top" /><span className="cube-face cube-bottom" />
               </motion.div>
             </motion.div>
             <motion.div className="hero-object hero-object-orb" style={{ y: heroOrbDrop }} aria-hidden="true">
-              <motion.div className="cobalt-orb" animate={{ rotateY: [0, 180, 360], scale: [1, 1.06, 1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}><span>✳</span></motion.div>
+              <motion.div className="cobalt-orb" animate={{ rotateY: [0, 180, 360], scale: [1, 1.06, 1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} />
+              <span className="tool-logo-plate django-logo-plate"><img src="/tech-logos/django.svg" alt="" /></span>
             </motion.div>
             <motion.div className="hero-object hero-object-ring" style={{ y: heroRingDrop }} aria-hidden="true">
               <motion.div className="cobalt-ring" animate={{ rotateZ: [0, 360], rotateX: [64, 54, 64] }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }}><i /></motion.div>
             </motion.div>
             <motion.div className="orbit orbit-one" animate={{ rotate: 360 }} transition={{ duration: 28, repeat: Infinity, ease: "linear" }} />
             <motion.div className="orbit orbit-two" animate={{ rotate: -360 }} transition={{ duration: 36, repeat: Infinity, ease: "linear" }} />
-            <motion.div className="floating-chip chip-python" animate={{ y: [0, -10, 0], rotate: [-3, 2, -3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}><span className="chip-logo python-logo">Py</span><span>Python</span></motion.div>
-            <motion.div className="floating-chip chip-react" animate={{ y: [0, 9, 0], rotate: [2, -2, 2] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}><span className="react-symbol">⚛</span><span>React</span></motion.div>
+            <motion.div className="floating-chip chip-python" animate={{ y: [0, -10, 0], rotate: [-3, 2, -3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}><span className="chip-logo python-logo"><img src="/tech-logos/python.svg" alt="" /></span><span>Python</span></motion.div>
+            <motion.div className="floating-chip chip-django" animate={{ y: [0, 9, 0], rotate: [2, -2, 2] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}><span className="django-chip-logo"><img src="/tech-logos/django.svg" alt="" /></span><span>Django</span></motion.div>
             <motion.div className="floating-chip chip-ai" animate={{ y: [0, -8, 0], x: [0, 3, 0] }} transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}><BrainCircuit size={17} /><span>AI / ML</span></motion.div>
             <motion.div className="core-card" animate={{ y: [0, -7, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
               <div className="core-top"><span className="window-dots"><i /><i /><i /></span><span className="core-file">developer.tsx</span><span className="core-status">● LIVE</span></div>

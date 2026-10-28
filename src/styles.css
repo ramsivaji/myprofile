@@ -9,9 +9,13 @@
 .hero-object-cube{top:17%;left:-12%;width:118px;height:118px;--cube-half:59px;perspective:700px}
 .cube-3d{position:relative;width:100%;height:100%;transform-style:preserve-3d}
 .cube-face{position:absolute;inset:0;display:grid;place-items:center;border:1px solid #d4ff2480;background:linear-gradient(145deg,#236bdfd9,#09265fe8);box-shadow:inset 0 0 25px #1558c988,0 0 25px #1558c944;color:#d4ff24;font:800 24px "DM Mono",monospace;backface-visibility:hidden}
+.tool-logo-plate{display:grid;place-items:center;width:64%;height:64%;border:1px solid #fff;border-radius:18px;background:linear-gradient(145deg,#fff,#dce7f5);box-shadow:0 5px 15px #03122f99,inset 0 1px 2px #fff}
+.tool-logo-plate img{display:block;width:64%;height:64%;object-fit:contain}
 .cube-front{transform:translateZ(var(--cube-half))}.cube-back{transform:rotateY(180deg) translateZ(var(--cube-half))}.cube-right{transform:rotateY(90deg) translateZ(var(--cube-half));background:linear-gradient(145deg,#1558c9,#071a45)}.cube-left{transform:rotateY(-90deg) translateZ(var(--cube-half));background:linear-gradient(145deg,#0b3688,#1558c9)}.cube-top{transform:rotateX(90deg) translateZ(var(--cube-half));background:linear-gradient(145deg,#4c8bf0,#1558c9)}.cube-bottom{transform:rotateX(-90deg) translateZ(var(--cube-half));background:linear-gradient(145deg,#061638,#0b3688)}
 .hero-object-orb{top:3%;right:2%;width:168px;height:168px}
 .cobalt-orb{position:relative;display:grid;place-items:center;width:100%;height:100%;border:1px solid #d4ff2470;border-radius:50%;background:radial-gradient(circle at 28% 25%,#b5d0ff 0,#4383ed 13%,#1558c9 38%,#08235f 72%,#030407 100%);box-shadow:inset -18px -24px 36px #02050caa,inset 10px 10px 22px #a6c8ff55,0 0 42px #1558c955;color:#d4ff24;font-size:42px}
+.django-logo-plate{position:absolute;z-index:2;top:50%;left:50%;width:66px;height:66px;border:1px solid #f0ff9e;border-radius:20px;background:linear-gradient(145deg,#eaff82,#d4ff24);box-shadow:0 7px 19px #02050c88;transform:translate(-50%,-50%)}
+.django-logo-plate img{width:58%;height:58%}
 .cobalt-orb::before,.cobalt-orb::after{content:"";position:absolute;inset:13%;border:1px solid #d4ff2455;border-radius:50%;transform:rotateX(68deg) rotateZ(-28deg)}.cobalt-orb::after{inset:20%;border-color:#b5d0ff55;transform:rotateY(66deg) rotateZ(30deg)}
 .hero-object-ring{bottom:8%;left:3%;width:260px;height:150px;perspective:800px}
 .cobalt-ring{position:relative;width:230px;height:108px;border:13px solid #1558c9;border-radius:50%;box-shadow:0 0 20px #1558c977,inset 0 0 20px #1558c977,0 0 45px #1558c944;transform-style:preserve-3d}
@@ -19,6 +23,9 @@
 @media(max-width:900px){.hero-object-cube{left:3%;top:14%;width:100px;height:100px;--cube-half:50px}.hero-object-orb{right:4%;top:1%;width:138px;height:138px}.hero-object-ring{left:5%;bottom:6%;width:220px;height:128px}.cobalt-ring{width:195px;height:92px}}
 @media(min-width:761px) and (max-width:900px){.hero{grid-template-columns:1.02fr .98fr;min-height:650px;padding-top:32px;padding-bottom:82px}.hero-copy{max-width:none}.hero h1{font-size:clamp(38px,5.2vw,50px);letter-spacing:-2.6px}.hero-description{font-size:13px}.hero-meta{gap:8px;font-size:9px}.hero-visual{height:390px;margin-top:0}.hero-object-cube{left:-8%}.core-card{width:94%}}
 @media(max-width:640px){.hero-object-cube{left:0;top:8%;width:74px;height:74px;--cube-half:37px}.hero-object-orb{right:0;top:0;width:106px;height:106px}.hero-object-ring{left:0;bottom:4%;width:170px;height:100px}.cobalt-ring{width:150px;height:70px;border-width:8px}.cobalt-orb{font-size:30px}}
+.python-logo img{display:block;width:17px;height:17px;object-fit:contain}
+.chip-django{top:105px;right:0}.django-chip-logo{display:grid;place-items:center;width:23px;height:23px;border-radius:7px;background:#d4ff24}.django-chip-logo img{display:block;width:15px;height:15px;object-fit:contain}
+@media(max-width:640px){.chip-django{top:45px;right:0}}
 
 /* A large, scroll-driven portrait figure made from Rama's uploaded photo. */
 .scroll-figure-rail{position:fixed;z-index:7;top:12vh;bottom:12vh;right:34px;width:1px;pointer-events:none;background:linear-gradient(transparent,#1558c938 12%,#1558c938 88%,transparent)}
