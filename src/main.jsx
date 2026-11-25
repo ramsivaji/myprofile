@@ -1,6 +1,6 @@
-﻿import React, { useEffect, useState } from "react";
+﻿import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useSpring, MotionConfig, AnimatePresence } from "framer-motion";
 import {
   ArrowDownRight, ArrowRight, ArrowUpRight, BrainCircuit, Braces, Check,
   ChevronDown, Code2, Copy, ExternalLink, Github, Globe2, Layers3, Linkedin, Mail,
@@ -60,87 +60,36 @@ function Reveal({ children, delay = 0, className = "" }) {
   return <motion.div className={className} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>;
 }
 
-function ScrollFigure({ progress, mode, showHireSign }) {
-  const top = useTransform(progress, [0, 1], ["10vh", "54vh"]);
-  const isThinking = mode === "thinking" || mode === "calling";
-
+function FeaturedWork() {
   return (
-    <motion.div className={`scroll-figure ${isThinking ? "is-thinking" : ""} ${mode === "calling" ? "is-calling" : ""}`} style={{ top }} aria-hidden="true">
-      <div className="figure-sprite">
-        {[1, 2, 3, 4].map((frame) => <img key={frame} className={`figure-frame figure-frame-${frame}`} src={`/rama-run-${frame}.webp`} alt="" />)}
+    <figure className="feature">
+      <div className="feature-art" aria-hidden="true">
+        <div className="art-orbit" />
+        <div className="schedule">
+          <div className="schedule-bar"><span className="medical-cross">+</span> CarePoint</div>
+          <div className="schedule-body">
+            <strong>Appointments</strong>
+            <div className="week">{["M", "T", "W", "T", "F"].map((day, i) => <span className={i === 2 ? "chosen" : ""} key={i}>{day}<b>{12 + i}</b></span>)}</div>
+            <div className="slot"><span>09:00</span><i /></div>
+            <div className="slot"><span>10:30</span><i /></div>
+          </div>
+        </div>
+        <div className="confirmation"><span><Check size={18} /></span> Appointment confirmed</div>
       </div>
-      <img className="figure-thinking" src="/rama-thinking.webp" alt="" />
-      <span className="figure-thought"><BrainCircuit size={18} /></span>
-      <span className={`figure-hire-sign ${showHireSign ? "is-visible" : ""}`}>I’d love to join your team!</span>
-      <span className="figure-phone"><PhoneCall size={17} /></span>
-      <span className="figure-callout">CALL ME</span>
-    </motion.div>
+      <figcaption><div><small>FEATURED PROJECT</small><strong>CarePoint</strong></div><a href={projects[0].link} target="_blank" rel="noreferrer">View app <ExternalLink size={15} /></a></figcaption>
+    </figure>
   );
 }
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [light, setLight] = useState(false);
+  const [light, setLight] = useState(true);
   const [filter, setFilter] = useState("All");
   const [copied, setCopied] = useState(false);
   const [activeTool, setActiveTool] = useState("playground");
   const [codeOutput, setCodeOutput] = useState(false);
-  const [figureMode, setFigureMode] = useState("running");
-  const [showHireSign, setShowHireSign] = useState(false);
-  const [isContactVisible, setIsContactVisible] = useState(false);
-  const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll();
-  const smoothScrollProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const scaleX = smoothScrollProgress;
-  const heroObjectDrop = useTransform(smoothScrollProgress, [0, 0.22], [0, 250]);
-  const heroOrbDrop = useTransform(smoothScrollProgress, [0, 0.22], [0, 180]);
-  const heroRingDrop = useTransform(smoothScrollProgress, [0, 0.22], [0, 320]);
-
-  useEffect(() => {
-    const move = (e) => setCursor({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
-
-  useEffect(() => {
-    const contactSection = document.getElementById("contact");
-    if (!contactSection) return undefined;
-    const observer = new IntersectionObserver(([entry]) => setIsContactVisible(entry.isIntersecting), { threshold: 0.2 });
-    observer.observe(contactSection);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    let idleTimer;
-    let signTimer;
-    if (isContactVisible) {
-      window.clearTimeout(idleTimer);
-      window.clearTimeout(signTimer);
-      setShowHireSign(false);
-      setFigureMode("calling");
-      return () => {
-        window.clearTimeout(idleTimer);
-        window.clearTimeout(signTimer);
-      };
-    }
-    const resumeRunning = () => {
-      setFigureMode("running");
-      setShowHireSign(false);
-      window.clearTimeout(idleTimer);
-      window.clearTimeout(signTimer);
-      idleTimer = window.setTimeout(() => {
-        setFigureMode("thinking");
-        signTimer = window.setTimeout(() => setShowHireSign(true), 1000);
-      }, 1000);
-    };
-    resumeRunning();
-    window.addEventListener("scroll", resumeRunning, { passive: true });
-    return () => {
-      window.clearTimeout(idleTimer);
-      window.clearTimeout(signTimer);
-      window.removeEventListener("scroll", resumeRunning);
-    };
-  }, [isContactVisible]);
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
   const categories = ["All", "Backend", "AI / ML", "Web App", "Database", "Embedded / IoT"];
   const visibleProjects = projects.filter((p) => {
@@ -162,17 +111,11 @@ function App() {
     }
   }
 
-  const navLinks = [["About", "#about"], ["Skills", "#skills"], ["Projects", "#projects"], ["Lab", "#lab"], ["Contact", "#contact"]];
+  const navLinks = [["Projects", "#projects"], ["About", "#about"], ["Skills", "#skills"], ["Lab", "#lab"], ["Contact", "#contact"]];
 
   return (
     <div className={light ? "app light" : "app"}>
       <motion.div className="scroll-progress" style={{ scaleX }} />
-      <div className="scroll-figure-rail" aria-hidden="true" />
-      <ScrollFigure progress={smoothScrollProgress} mode={figureMode} showHireSign={showHireSign} />
-      <div className="ambient ambient-one" />
-      <div className="ambient ambient-two" />
-      <div className="grid-overlay" />
-      <div className="cursor-glow" style={{ left: cursor.x, top: cursor.y }} />
       <header className="topbar">
         <a className="brand" href="#home" aria-label="Rama Sivaji home"><span className="brand-mark">RS</span><span>Rama Sivaji</span></a>
         <nav className={menuOpen ? "nav-links open" : "nav-links"}>
@@ -181,7 +124,7 @@ function App() {
         <div className="nav-actions">
           <button className="icon-button theme-toggle" onClick={() => setLight(!light)} aria-label="Toggle theme">{light ? <Moon size={17} /> : <Sun size={17} />}</button>
           <a className="nav-cta" href="#contact">Let's talk <ArrowUpRight size={15} /></a>
-          <button className="icon-button menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button>
+          <button className="icon-button menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle navigation">{menuOpen ? <X /> : <Menu />}</button>
         </div>
       </header>
 
@@ -190,55 +133,32 @@ function App() {
           <div className="hero-copy">
             <motion.div className="availability" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15 }}><span className="status-dot" /> OPEN TO OPPORTUNITIES <span className="availability-line" /></motion.div>
             <motion.h1 initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .25, duration: .7 }}>
-              I build things<br />for the <span className="gradient-text">digital world.</span>
+              Rama<br /><em>Sivaji.</em>
             </motion.h1>
             <motion.p className="hero-description" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .45 }}>
-              Hey, I’m <strong>Kaisarlla Rama Sivaji</strong> — a Python Backend Developer focused on Django, REST APIs, database-backed applications, and practical AI projects.
+              I’m a <strong>Python backend developer</strong> building REST APIs, database-backed applications, and computer vision projects.
             </motion.p>
             <motion.div className="hero-buttons" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .55 }}>
-              <a className="button button-primary" href="#projects">Explore my work <ArrowUpRight size={17} /></a>
+              <a className="button button-primary" href="#projects">Explore projects</a>
               <a className="button button-ghost" href="#contact"><Mail size={16} /> Get in touch</a>
             </motion.div>
             <motion.div className="hero-meta" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .7 }}>
               <span><span className="meta-icon"><Code2 size={14} /></span> Python Backend</span><span className="meta-divider" /><span><span className="meta-icon"><Database size={14} /></span> REST APIs & SQL</span><span className="meta-divider" /><span><span className="meta-icon"><Globe2 size={14} /></span> India</span>
             </motion.div>
           </div>
-          <div className="hero-visual" aria-label="Animated developer illustration">
-            <motion.div className="hero-object hero-object-cube" style={{ y: heroObjectDrop }} aria-hidden="true">
-              <motion.div className="cube-3d" animate={{ rotateX: [-18, 8, -18], rotateY: [-32, 20, -32], rotateZ: [-8, 5, -8] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}>
-                <span className="cube-face cube-front"><span className="tool-logo-plate"><img src="/tech-logos/python.svg" alt="" /></span></span><span className="cube-face cube-back">✦</span><span className="cube-face cube-right" /><span className="cube-face cube-left" /><span className="cube-face cube-top" /><span className="cube-face cube-bottom" />
-              </motion.div>
-            </motion.div>
-            <motion.div className="hero-object hero-object-orb" style={{ y: heroOrbDrop }} aria-hidden="true">
-              <motion.div className="cobalt-orb" animate={{ rotateY: [0, 180, 360], scale: [1, 1.06, 1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} />
-              <span className="tool-logo-plate django-logo-plate"><img src="/tech-logos/django.svg" alt="" /></span>
-            </motion.div>
-            <motion.div className="hero-object hero-object-ring" style={{ y: heroRingDrop }} aria-hidden="true">
-              <motion.div className="cobalt-ring" animate={{ rotateZ: [0, 360], rotateX: [64, 54, 64] }} transition={{ duration: 18, repeat: Infinity, ease: "linear" }}><i /></motion.div>
-            </motion.div>
-            <motion.div className="orbit orbit-one" animate={{ rotate: 360 }} transition={{ duration: 28, repeat: Infinity, ease: "linear" }} />
-            <motion.div className="orbit orbit-two" animate={{ rotate: -360 }} transition={{ duration: 36, repeat: Infinity, ease: "linear" }} />
-            <motion.div className="floating-chip chip-python" animate={{ y: [0, -10, 0], rotate: [-3, 2, -3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}><span className="chip-logo python-logo"><img src="/tech-logos/python.svg" alt="" /></span><span>Python</span></motion.div>
-            <motion.div className="floating-chip chip-django" animate={{ y: [0, 9, 0], rotate: [2, -2, 2] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}><span className="django-chip-logo"><img src="/tech-logos/django.svg" alt="" /></span><span>Django</span></motion.div>
-            <motion.div className="floating-chip chip-ai" animate={{ y: [0, -8, 0], x: [0, 3, 0] }} transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}><BrainCircuit size={17} /><span>AI / ML</span></motion.div>
-            <motion.div className="core-card" animate={{ y: [0, -7, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
-              <div className="core-top"><span className="window-dots"><i /><i /><i /></span><span className="core-file">developer.tsx</span><span className="core-status">● LIVE</span></div>
-              <div className="code-snippet"><div><span className="code-purple">const</span> <span className="code-blue">developer</span> = {"{"}</div><div className="code-indent"><span className="code-cyan">name</span>: <span className="code-green">'Sivaji'</span>,</div><div className="code-indent"><span className="code-cyan">focus</span>: <span className="code-green">'Build + Learn'</span>,</div><div className="code-indent"><span className="code-cyan">coffee</span>: <span className="code-orange">true</span>,</div><div>{"}"}</div><div className="code-comment">// turning ideas into products <span className="blinking-cursor">▍</span></div></div>
-              <div className="core-bottom"><span><span className="pulse-dot" /> Available for new projects</span><span>v1.0.0</span></div>
-            </motion.div>
-            <motion.div className="floating-stat" animate={{ y: [0, 6, 0] }} transition={{ duration: 3.8, repeat: Infinity }}><Sparkles size={15} /><span><strong>Curiosity</strong><small>always compiling</small></span></motion.div>
-            <div className="hero-visual-caption">DESIGNED TO LEARN. BUILT TO SHIP.</div>
-          </div>
-          <a className="scroll-cue" href="#about"><span>SCROLL TO EXPLORE</span><ChevronDown size={16} /></a>
+          <FeaturedWork />
         </section>
 
-        <section className="ticker" aria-label="Technologies"><div className="ticker-track">{Array.from({ length: 2 }).flatMap((_, i) => ["PYTHON", "SQL", "DJANGO", "DJANGO REST FRAMEWORK", "FLASK", "MYSQL", "PANDAS", "NUMPY", "GIT", "GITHUB"].map((item, j) => <span key={`${i}-${j}`}><i />{item}</span>))}</div></section>
+        <section className="section-wrap projects-section" id="projects">
+          <Reveal><div className="section-kicker"><span>PROJECT PORTFOLIO</span><span className="kicker-line" /></div><div className="section-heading-row projects-heading"><h2>Selected projects<span className="gradient-text">.</span></h2><div className="filters">{categories.map((c) => <button key={c} aria-pressed={filter === c} onClick={() => setFilter(c)} className={filter === c ? "filter active" : "filter"}>{c}</button>)}</div></div></Reveal>
+          <div className="projects-grid">{visibleProjects.map((project, i) => <Reveal key={project.number} delay={i * .08} className={`project-card ${project.accent}`}><div className="project-card-top"><span className="project-number">{project.number} / 06</span><span className="project-type">{project.type}</span></div><div className="project-illustration"><div className="illustration-ring ring-a" /><div className="illustration-ring ring-b" /><div className="illustration-orb"><project.icon size={38} strokeWidth={1.3} /></div><span className="illustration-label">{project.type}</span></div><div className="project-content"><h3>{project.title}</h3><p>{project.description}</p><div className="tag-row">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>{project.link ? <a className="project-link" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={16} /></a> : <span className="project-link project-link-muted">{project.linkLabel}</span>}</div></Reveal>)}</div>
+        </section>
 
         <section className="section-wrap about-section" id="about">
-          <Reveal><div className="section-kicker"><span>01 / ABOUT ME</span><span className="kicker-line" /></div></Reveal>
+          <Reveal><div className="section-kicker"><span>ABOUT ME</span><span className="kicker-line" /></div></Reveal>
           <div className="about-grid">
             <Reveal className="about-heading"><h2>Curious mind.<br /><span className="muted-heading">Practical builder.</span></h2></Reveal>
-            <Reveal delay={.12} className="about-body"><p>I’m a B.Tech Computer Science (AI & ML) graduate and Python Backend Developer. My focus is building RESTful APIs, database-backed applications, and useful software with Django and Python.</p><p>My projects include a hospital appointment and patient management API, a PDF conversion web app, and an image-based road damage detection system. I value clear code, reliable data handling, and practical solutions.</p><a href="#contact" className="text-link">A little more about me <ArrowRight size={16} /></a></Reveal>
+            <Reveal delay={.12} className="about-body"><p>I’m a B.Tech Computer Science (AI & ML) graduate and Python Backend Developer. My focus is building RESTful APIs, database-backed applications, and useful software with Django and Python.</p><p>My projects include a hospital appointment and patient management API, a PDF conversion web app, and an image-based road damage detection system. I value clear code, reliable data handling, and practical solutions.</p><a href="#contact" className="text-link">Get in touch <ArrowRight size={16} /></a></Reveal>
           </div>
           <div className="stats-row">
             {[["2025", "B.Tech graduate"], ["Python", "Backend focus"], ["REST APIs", "Development focus"]].map(([num, label], i) => <Reveal delay={i * .08} key={label} className="stat-item"><strong>{num}</strong><span>{label}</span></Reveal>)}
@@ -246,17 +166,12 @@ function App() {
         </section>
 
         <section className="section-wrap skills-section" id="skills">
-          <Reveal><div className="section-kicker"><span>02 / TOOLKIT</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>Tools of the trade<span className="gradient-text">.</span></h2><p>Skills listed in my resume, organized by focus area.</p></div></Reveal>
+          <Reveal><div className="section-kicker"><span>TOOLKIT</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>Tools of the trade<span className="gradient-text">.</span></h2><p>Languages, frameworks, and tools I use in my projects.</p></div></Reveal>
           <div className="skills-grid">{skills.map((skill, i) => <Reveal key={skill.title} delay={i * .06} className="skill-card"><div className="skill-card-heading"><h3>{skill.title}</h3><span>0{i + 1}</span></div><div className="skill-logo-row">{skill.logos.map((logo) => <div className="skill-logo-item" key={logo.name} title={logo.name}><div className={`tech-logo tech-logo-${logo.name.toLowerCase().replaceAll(" ", "-")}`} role="img" aria-label={`${logo.name} logo`}>{logo.file ? <img src={`/tech-logos/${logo.file}.svg`} alt="" /> : logo.symbol === "database" ? <Database size={25} strokeWidth={2.1} /> : <Braces size={25} strokeWidth={2.1} />}</div><span className="tech-logo-name">{logo.name}</span></div>)}</div></Reveal>)}</div>
         </section>
 
-        <section className="section-wrap projects-section" id="projects">
-          <Reveal><div className="section-kicker"><span>03 / SELECTED WORK</span><span className="kicker-line" /></div><div className="section-heading-row projects-heading"><h2>Made with intent<span className="gradient-text">.</span></h2><div className="filters">{categories.map((c) => <button key={c} onClick={() => setFilter(c)} className={filter === c ? "filter active" : "filter"}>{c}</button>)}</div></div></Reveal>
-          <div className="projects-grid">{visibleProjects.map((project, i) => <Reveal key={project.number} delay={i * .08} className={`project-card ${project.accent}`}><div className="project-card-top"><span className="project-number">{project.number} / 06</span><span className="project-type">{project.type}</span></div><div className="project-illustration"><div className="illustration-ring ring-a" /><div className="illustration-ring ring-b" /><div className="illustration-orb"><project.icon size={38} strokeWidth={1.3} /></div><span className="illustration-label">{project.type}</span></div><div className="project-content"><h3>{project.title}</h3><p>{project.description}</p><div className="tag-row">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>{project.link ? <a className="project-link" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={16} /></a> : <span className="project-link project-link-muted">{project.linkLabel}</span>}</div></Reveal>)}</div>
-        </section>
-
         <section className="section-wrap experience-section">
-          <Reveal><div className="section-kicker"><span>04 / JOURNEY</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>Learning by doing<span className="gradient-text">.</span></h2><p>Each step is a chance to build a stronger foundation.</p></div></Reveal>
+          <Reveal><div className="section-kicker"><span>EXPERIENCE & EDUCATION</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>Learning by doing<span className="gradient-text">.</span></h2><p>Each step is a chance to build a stronger foundation.</p></div></Reveal>
           <div className="timeline">
             <Reveal className="timeline-item">
               <div className="timeline-marker"><span /></div>
@@ -281,7 +196,7 @@ function App() {
         </section>
 
         <section className="section-wrap lab-section" id="lab">
-          <Reveal><div className="section-kicker"><span>05 / INTERACTIVE LAB</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>A tiny developer lab<span className="gradient-text">.</span></h2><p>A few playful interactions — because a portfolio should do more than sit still.</p></div></Reveal>
+          <Reveal><div className="section-kicker"><span>INTERACTIVE LAB</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>A tiny developer lab<span className="gradient-text">.</span></h2><p>A few playful interactions — because a portfolio should do more than sit still.</p></div></Reveal>
           <Reveal className="lab-panel">
             <div className="lab-sidebar"><div className="lab-label"><span className="pulse-dot" /> PLAYGROUND</div><button onClick={() => setActiveTool("playground")} className={activeTool === "playground" ? "lab-tab active" : "lab-tab"}><Braces size={16} /> Code playground</button><button onClick={() => setActiveTool("focus")} className={activeTool === "focus" ? "lab-tab active" : "lab-tab"}><Zap size={16} /> Focus mode</button><button onClick={() => setActiveTool("manifesto")} className={activeTool === "manifesto" ? "lab-tab active" : "lab-tab"}><Rocket size={16} /> Build mindset</button><div className="lab-sidebar-foot">INTERACTIVE COMPONENTS<br /><span>STATUS: ALL SYSTEMS GO</span></div></div>
             <div className="lab-workspace">
@@ -294,11 +209,11 @@ function App() {
           </Reveal>
         </section>
 
-        <section className="contact-section" id="contact"><div className="section-wrap contact-wrap"><Reveal><div className="section-kicker"><span>06 / CONTACT</span><span className="kicker-line" /></div><div className="contact-grid"><div><h2>Have an idea?<br /><span className="gradient-text">Let's make it real.</span></h2><p>Open to entry-level developer opportunities, collaborations, and interesting problems to solve.</p><div className="contact-buttons"><a className="button button-primary" href="mailto:ramsivaji0@gmail.com">Send me an email <ArrowUpRight size={16} /></a><button className="button button-ghost" onClick={copyEmail}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Copied!" : "Copy email"}</button></div></div><div className="contact-card"><div className="contact-card-top"><span className="status-dot" /> CURRENTLY OPEN TO WORK</div><div className="contact-detail"><span className="contact-detail-icon"><Mail size={18} /></span><div><small>EMAIL</small><strong>ramsivaji0@gmail.com</strong></div><button onClick={copyEmail} aria-label="Copy email">{copied ? <Check size={16} /> : <Copy size={16} />}</button></div><a className="contact-detail contact-link" href="https://github.com/ramsivaji" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Github size={18} /></span><div><small>GITHUB</small><strong>github.com/ramsivaji</strong></div><ArrowUpRight size={16} /></a><a className="contact-detail contact-link" href="https://www.linkedin.com/in/rama-sivaji-kaisarlla/" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Linkedin size={18} /></span><div><small>LINKEDIN</small><strong>Rama Sivaji Kaisarlla</strong></div><ArrowUpRight size={16} /></a></div></div></Reveal></div></section>
+        <section className="contact-section" id="contact"><div className="section-wrap contact-wrap"><Reveal><div className="section-kicker"><span>CONTACT</span><span className="kicker-line" /></div><div className="contact-grid"><div><h2>Have an idea?<br /><span className="gradient-text">Let's make it real.</span></h2><p>Open to entry-level developer opportunities, collaborations, and interesting problems to solve.</p><div className="contact-buttons"><a className="button button-primary" href="mailto:ramsivaji0@gmail.com">Send me an email <ArrowUpRight size={16} /></a><button className="button button-ghost" onClick={copyEmail}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Copied!" : "Copy email"}</button></div></div><div className="contact-card"><div className="contact-card-top"><span className="status-dot" /> CURRENTLY OPEN TO WORK</div><div className="contact-detail"><span className="contact-detail-icon"><Mail size={18} /></span><div><small>EMAIL</small><strong>ramsivaji0@gmail.com</strong></div><button onClick={copyEmail} aria-label="Copy email">{copied ? <Check size={16} /> : <Copy size={16} />}</button></div><a className="contact-detail contact-link" href="https://github.com/ramsivaji" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Github size={18} /></span><div><small>GITHUB</small><strong>github.com/ramsivaji</strong></div><ArrowUpRight size={16} /></a><a className="contact-detail contact-link" href="https://www.linkedin.com/in/rama-sivaji-kaisarlla/" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Linkedin size={18} /></span><div><small>LINKEDIN</small><strong>Rama Sivaji Kaisarlla</strong></div><ArrowUpRight size={16} /></a></div></div></Reveal></div></section>
       </main>
       <footer className="footer section-wrap"><a className="brand" href="#home"><span className="brand-mark">RS</span><span>Rama Sivaji</span></a><span>Designed & built with curiosity <span className="footer-heart">✦</span></span><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
     </div>
   );
 }
 
-createRoot(document.getElementById("root")).render(<React.StrictMode><App /></React.StrictMode>);
+createRoot(document.getElementById("root")).render(<React.StrictMode><MotionConfig reducedMotion="user"><App /></MotionConfig></React.StrictMode>);
