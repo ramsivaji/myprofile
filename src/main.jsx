@@ -1,47 +1,46 @@
 ﻿import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { motion, useScroll, useSpring, MotionConfig, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useSpring, MotionConfig } from "framer-motion";
 import {
-  ArrowDownRight, ArrowRight, ArrowUpRight, BrainCircuit, Braces, Check,
-  ChevronDown, Code2, Copy, ExternalLink, Github, Globe2, Layers3, Linkedin, Mail,
-  Menu, Moon, MousePointer2, Play, Rocket, Send, Sparkles, Sun, Terminal,
-  X, Zap, Database, Server, Smartphone, Eye, CarFront, PhoneCall
+  ArrowRight, ArrowUpRight, BrainCircuit, Braces, CarFront, Check, Code2,
+  Copy, Database, Github, Globe2, Layers3, Linkedin, Mail, Menu, Moon,
+  Server, Sun, X
 } from "lucide-react";
 import "./styles.css";
 
 const projects = [
   {
-    number: "01", title: "Hospital Appointment & Patient Management", type: "BACKEND / REST API",
+    number: "01", cover: "CarePoint", title: "Hospital Appointment & Patient Management", type: "BACKEND / REST API",
     description: "A backend system for managing patients, doctors, appointments, and medical records, with authentication, role-based access, validation, search, filtering, pagination, and PostgreSQL integration.",
     tags: ["Python", "Django", "Django REST Framework", "PostgreSQL"], icon: Server,
     link: "https://sivajicarepoint.netlify.app/", linkLabel: "Open live app", accent: "violet"
   },
   {
-    number: "02", title: "PDF Maker", type: "WEB APP / DOCUMENT TOOLS",
+    number: "02", cover: "PDF Maker", title: "PDF Maker", type: "WEB APP / DOCUMENT TOOLS",
     description: "A browser-based PDF conversion tool with a frontend and Python backend, organized into separate application components.",
     tags: ["Python", "FastAPI", "HTML", "CSS"], icon: Layers3,
     link: "https://pdf-maker-chi.vercel.app/", linkLabel: "Open live app", accent: "blue"
   },
   {
-    number: "03", title: "Automated Road Damage Detection", type: "AI / COMPUTER VISION",
+    number: "03", cover: "Road Vision", title: "Automated Road Damage Detection", type: "AI / COMPUTER VISION",
     description: "An AI project that detects potholes and road cracks in drone imagery using YOLOv8 trained on the RDD2022 dataset to support more efficient road inspections.",
     tags: ["Python", "YOLOv8"], icon: BrainCircuit,
     link: null, linkLabel: "Project from resume", accent: "orange"
   },
   {
-    number: "04", title: "AP & Telangana Tourism", type: "WEB / TOURISM",
+    number: "04", cover: "Discover South India", title: "AP & Telangana Tourism", type: "WEB / TOURISM",
     description: "A React-based tourism website for exploring popular destinations across Andhra Pradesh and Telangana, with state selection, destination information, and a responsive interface.",
     tags: ["React", "Vite", "TypeScript"], icon: Globe2,
     link: "https://ramsivaji.github.io/discover-south-india/index.html", linkLabel: "Open live site", accent: "blue"
   },
   {
-    number: "05", title: "Student Management System", type: "DATABASE / CRUD APP",
+    number: "05", cover: "Student Records", title: "Student Management System", type: "DATABASE / CRUD APP",
     description: "A desktop CRUD application to insert, update, delete, and view student records through a Tkinter interface connected to a MySQL database.",
     tags: ["Python", "Tkinter", "MySQL"], icon: Database,
     link: "https://github.com/ramsivaji/student-mangement-system-using-pdbc-and-mysql-database.", linkLabel: "View on GitHub", accent: "violet"
   },
   {
-    number: "06", title: "ESP32-CAM Car", type: "EMBEDDED / IOT",
+    number: "06", cover: "ESP32-CAM", title: "ESP32-CAM Car", type: "EMBEDDED / IOT",
     description: "An ESP32-CAM car project concept combining a camera-enabled vehicle with Wi-Fi-based control and a pan–tilt servo setup to adjust the camera’s viewing direction.",
     tags: ["ESP32-CAM", "Embedded Systems", "Wi-Fi", "Servo Motors"], icon: CarFront,
     link: null, linkLabel: "Personal project", accent: "orange"
@@ -60,34 +59,39 @@ function Reveal({ children, delay = 0, className = "" }) {
   return <motion.div className={className} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}>{children}</motion.div>;
 }
 
-function FeaturedWork() {
+function StackGraphic() {
   return (
-    <figure className="feature">
-      <div className="feature-art" aria-hidden="true">
-        <div className="art-orbit" />
-        <div className="schedule">
-          <div className="schedule-bar"><span className="medical-cross">+</span> CarePoint</div>
-          <div className="schedule-body">
-            <strong>Appointments</strong>
-            <div className="week">{["M", "T", "W", "T", "F"].map((day, i) => <span className={i === 2 ? "chosen" : ""} key={i}>{day}<b>{12 + i}</b></span>)}</div>
-            <div className="slot"><span>09:00</span><i /></div>
-            <div className="slot"><span>10:30</span><i /></div>
+    <figure className="stack-graphic" aria-label="Backend stack illustration showing Python, Django, and PostgreSQL">
+      <div className="stack-stage" aria-hidden="true">
+        <div className="stack-shadow" />
+        {["storage", "framework", "language"].map((layer) => (
+          <div key={layer} className={`stack-layer ${layer}`}>
+            <div className="stack-plane">{layer === "language" && <Code2 strokeWidth={1.35} />}</div>
           </div>
-        </div>
-        <div className="confirmation"><span><Check size={18} /></span> Appointment confirmed</div>
+        ))}
+        <span className="stack-label label-language">Python</span>
+        <span className="stack-label label-framework">Django</span>
+        <span className="stack-label label-storage">PostgreSQL</span>
       </div>
-      <figcaption><div><small>FEATURED PROJECT</small><strong>CarePoint</strong></div><a href={projects[0].link} target="_blank" rel="noreferrer">View app <ExternalLink size={15} /></a></figcaption>
     </figure>
+  );
+}
+
+function ProjectCover({ project }) {
+  const Icon = project.icon;
+  return (
+    <div className={`project-cover cover-${project.number}`} aria-hidden="true">
+      <div className="cover-mark"><Icon strokeWidth={1.3} /></div>
+      <div className="cover-title">{project.cover}</div>
+    </div>
   );
 }
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [light, setLight] = useState(true);
+  const [light, setLight] = useState(false);
   const [filter, setFilter] = useState("All");
   const [copied, setCopied] = useState(false);
-  const [activeTool, setActiveTool] = useState("playground");
-  const [codeOutput, setCodeOutput] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
@@ -111,14 +115,15 @@ function App() {
     }
   }
 
-  const navLinks = [["Projects", "#projects"], ["About", "#about"], ["Skills", "#skills"], ["Lab", "#lab"], ["Contact", "#contact"]];
+  const navLinks = [["Projects", "#projects"], ["About", "#about"], ["Skills", "#skills"], ["Contact", "#contact"]];
 
   return (
     <div className={light ? "app light" : "app"}>
       <motion.div className="scroll-progress" style={{ scaleX }} />
+      <a className="skip-link" href="#projects">Skip to projects</a>
       <header className="topbar">
         <a className="brand" href="#home" aria-label="Rama Sivaji home"><span className="brand-mark">RS</span><span>Rama Sivaji</span></a>
-        <nav className={menuOpen ? "nav-links open" : "nav-links"}>
+        <nav aria-label="Main navigation" className={menuOpen ? "nav-links open" : "nav-links"}>
           {navLinks.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
         </nav>
         <div className="nav-actions">
@@ -131,47 +136,72 @@ function App() {
       <main>
         <section className="hero section-wrap" id="home">
           <div className="hero-copy">
-            <motion.div className="availability" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15 }}><span className="status-dot" /> OPEN TO OPPORTUNITIES <span className="availability-line" /></motion.div>
+            <motion.div className="availability" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15 }}><span className="status-dot" /> Open to my first full-time role <span className="availability-line" /></motion.div>
             <motion.h1 initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .25, duration: .7 }}>
-              Rama<br /><em>Sivaji.</em>
+              Rama <em>Sivaji.</em>
             </motion.h1>
+
             <motion.p className="hero-description" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .45 }}>
-              I’m a <strong>Python backend developer</strong> building REST APIs, database-backed applications, and computer vision projects.
+              I’m a <strong>computer science graduate</strong> focused on Python backend development. I build REST APIs, database-backed applications, and computer vision projects.
             </motion.p>
             <motion.div className="hero-buttons" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .55 }}>
-              <a className="button button-primary" href="#projects">Explore projects</a>
+              <a className="button button-primary" href="#projects">View projects</a>
               <a className="button button-ghost" href="#contact"><Mail size={16} /> Get in touch</a>
             </motion.div>
-            <motion.div className="hero-meta" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .7 }}>
-              <span><span className="meta-icon"><Code2 size={14} /></span> Python Backend</span><span className="meta-divider" /><span><span className="meta-icon"><Database size={14} /></span> REST APIs & SQL</span><span className="meta-divider" /><span><span className="meta-icon"><Globe2 size={14} /></span> India</span>
-            </motion.div>
           </div>
-          <FeaturedWork />
+          <StackGraphic />
         </section>
+        <div className="stack-strip section-wrap" aria-label="Core technologies">
+          {["Python", "Django", "PostgreSQL", "Flask", "Git"].map(name => (
+            <span key={name}><img alt="" src={`${import.meta.env.BASE_URL}tech-logos/${name.toLowerCase()}.svg`} />{name}</span>
+          ))}
+        </div>
+
 
         <section className="section-wrap projects-section" id="projects">
-          <Reveal><div className="section-kicker"><span>PROJECT PORTFOLIO</span><span className="kicker-line" /></div><div className="section-heading-row projects-heading"><h2>Selected projects<span className="gradient-text">.</span></h2><div className="filters">{categories.map((c) => <button key={c} aria-pressed={filter === c} onClick={() => setFilter(c)} className={filter === c ? "filter active" : "filter"}>{c}</button>)}</div></div></Reveal>
-          <div className="projects-grid">{visibleProjects.map((project, i) => <Reveal key={project.number} delay={i * .08} className={`project-card ${project.accent}`}><div className="project-card-top"><span className="project-number">{project.number} / 06</span><span className="project-type">{project.type}</span></div><div className="project-illustration"><div className="illustration-ring ring-a" /><div className="illustration-ring ring-b" /><div className="illustration-orb"><project.icon size={38} strokeWidth={1.3} /></div><span className="illustration-label">{project.type}</span></div><div className="project-content"><h3>{project.title}</h3><p>{project.description}</p><div className="tag-row">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>{project.link ? <a className="project-link" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={16} /></a> : <span className="project-link project-link-muted">{project.linkLabel}</span>}</div></Reveal>)}</div>
+          <div className="section-heading-row">
+            <h2>Selected work<span>.</span></h2>
+            <a className="text-link" href="https://github.com/ramsivaji" target="_blank" rel="noreferrer"><Github size={17} /> GitHub profile</a>
+          </div>
+          <div className="filters" aria-label="Project categories">
+            {categories.map(category => (
+              <button key={category} aria-pressed={filter === category} onClick={() => setFilter(category)}>
+                {filter === category && <motion.span aria-hidden="true" className="filter-pill" layoutId="selected-category" transition={{ type: "spring", stiffness: 430, damping: 36 }} />}
+                {category}
+              </button>
+            ))}
+          </div>
+          <div className="projects-grid">
+            {visibleProjects.map((project, i) => (
+              <Reveal key={project.number} delay={Math.min(i, 2) * .06} className="project-card">
+                <ProjectCover project={project} />
+                <div className="project-content">
+                  <small>{project.type}</small>
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <div className="tag-row">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+                  {project.link && <a className="project-link" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ArrowUpRight size={16} /></a>}
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </section>
 
         <section className="section-wrap about-section" id="about">
           <Reveal><div className="section-kicker"><span>ABOUT ME</span><span className="kicker-line" /></div></Reveal>
           <div className="about-grid">
             <Reveal className="about-heading"><h2>Curious mind.<br /><span className="muted-heading">Practical builder.</span></h2></Reveal>
-            <Reveal delay={.12} className="about-body"><p>I’m a B.Tech Computer Science (AI & ML) graduate and Python Backend Developer. My focus is building RESTful APIs, database-backed applications, and useful software with Django and Python.</p><p>My projects include a hospital appointment and patient management API, a PDF conversion web app, and an image-based road damage detection system. I value clear code, reliable data handling, and practical solutions.</p><a href="#contact" className="text-link">Get in touch <ArrowRight size={16} /></a></Reveal>
-          </div>
-          <div className="stats-row">
-            {[["2025", "B.Tech graduate"], ["Python", "Backend focus"], ["REST APIs", "Development focus"]].map(([num, label], i) => <Reveal delay={i * .08} key={label} className="stat-item"><strong>{num}</strong><span>{label}</span></Reveal>)}
+            <Reveal delay={.12} className="about-body"><p>I’m Kaisarlla Rama Sivaji, a B.Tech Computer Science (AI & ML) graduate and Python Backend Developer. My focus is building RESTful APIs, database-backed applications, and useful software with Django and Python.</p><p>My projects include a hospital appointment and patient management API, a PDF conversion web app, and an image-based road damage detection system. I value clear code, reliable data handling, and practical solutions.</p><a href="#contact" className="text-link">Get in touch <ArrowRight size={16} /></a></Reveal>
           </div>
         </section>
 
         <section className="section-wrap skills-section" id="skills">
           <Reveal><div className="section-kicker"><span>TOOLKIT</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>Tools of the trade<span className="gradient-text">.</span></h2><p>Languages, frameworks, and tools I use in my projects.</p></div></Reveal>
-          <div className="skills-grid">{skills.map((skill, i) => <Reveal key={skill.title} delay={i * .06} className="skill-card"><div className="skill-card-heading"><h3>{skill.title}</h3><span>0{i + 1}</span></div><div className="skill-logo-row">{skill.logos.map((logo) => <div className="skill-logo-item" key={logo.name} title={logo.name}><div className={`tech-logo tech-logo-${logo.name.toLowerCase().replaceAll(" ", "-")}`} role="img" aria-label={`${logo.name} logo`}>{logo.file ? <img src={`/tech-logos/${logo.file}.svg`} alt="" /> : logo.symbol === "database" ? <Database size={25} strokeWidth={2.1} /> : <Braces size={25} strokeWidth={2.1} />}</div><span className="tech-logo-name">{logo.name}</span></div>)}</div></Reveal>)}</div>
+          <div className="skills-grid">{skills.map((skill, i) => <Reveal key={skill.title} delay={i * .06} className="skill-card"><div className="skill-card-heading"><h3>{skill.title}</h3></div><div className="skill-logo-row">{skill.logos.map((logo) => <div className="skill-logo-item" key={logo.name} title={logo.name}><div className={`tech-logo tech-logo-${logo.name.toLowerCase().replaceAll(" ", "-")}`} role="img" aria-label={`${logo.name} logo`}>{logo.file ? <img src={`${import.meta.env.BASE_URL}tech-logos/${logo.file}.svg`} alt="" /> : logo.symbol === "database" ? <Database size={25} strokeWidth={2.1} /> : <Braces size={25} strokeWidth={2.1} />}</div><span className="tech-logo-name">{logo.name}</span></div>)}</div></Reveal>)}</div>
         </section>
 
         <section className="section-wrap experience-section">
-          <Reveal><div className="section-kicker"><span>EXPERIENCE & EDUCATION</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>Learning by doing<span className="gradient-text">.</span></h2><p>Each step is a chance to build a stronger foundation.</p></div></Reveal>
+          <Reveal><div className="section-heading-row"><h2>Internship & education<span className="gradient-text">.</span></h2></div></Reveal>
           <div className="timeline">
             <Reveal className="timeline-item">
               <div className="timeline-marker"><span /></div>
@@ -181,7 +211,7 @@ function App() {
                   <h3>Data Analyst</h3>
                   <p className="timeline-org">Concentrix &nbsp;·&nbsp; <span className="timeline-client">Apple AI</span> &nbsp;·&nbsp; Hyderabad</p>
                 </div>
-                <span className="timeline-pill">EXPERIENCE</span>
+                <span className="timeline-pill">INTERNSHIP</span>
               </div>
               <ul className="timeline-bullets">
                 <li>Reviewed AI-generated responses from Apple's AI system and evaluated them for accuracy, relevance, and overall quality.</li>
@@ -195,23 +225,9 @@ function App() {
           <div className="certifications-strip"><span className="certification-label">CERTIFICATIONS</span><span>PMKVY 4.0 – Skill India Certificate (Python Programming / Web Development)</span><span>Udemy – Python Frameworks and Django for Beginners</span></div>
         </section>
 
-        <section className="section-wrap lab-section" id="lab">
-          <Reveal><div className="section-kicker"><span>INTERACTIVE LAB</span><span className="kicker-line" /></div><div className="section-heading-row"><h2>A tiny developer lab<span className="gradient-text">.</span></h2><p>A few playful interactions — because a portfolio should do more than sit still.</p></div></Reveal>
-          <Reveal className="lab-panel">
-            <div className="lab-sidebar"><div className="lab-label"><span className="pulse-dot" /> PLAYGROUND</div><button onClick={() => setActiveTool("playground")} className={activeTool === "playground" ? "lab-tab active" : "lab-tab"}><Braces size={16} /> Code playground</button><button onClick={() => setActiveTool("focus")} className={activeTool === "focus" ? "lab-tab active" : "lab-tab"}><Zap size={16} /> Focus mode</button><button onClick={() => setActiveTool("manifesto")} className={activeTool === "manifesto" ? "lab-tab active" : "lab-tab"}><Rocket size={16} /> Build mindset</button><div className="lab-sidebar-foot">INTERACTIVE COMPONENTS<br /><span>STATUS: ALL SYSTEMS GO</span></div></div>
-            <div className="lab-workspace">
-              <AnimatePresence mode="wait">
-                {activeTool === "playground" && <motion.div key="playground" className="lab-content" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }}><div className="workspace-top"><span><Terminal size={15} /> app.py</span><span className="file-language">PYTHON</span></div><pre className="play-code"><span className="code-purple">def</span> <span className="code-blue">build_idea</span>(idea):{"\n"}    <span className="code-comment"># small steps, real progress</span>{"\n"}    <span className="code-purple">return</span> <span className="code-green">f"Shipping: {"{idea}"} 🚀"</span>{"\n\n"}<span className="code-blue">print</span>(build_idea(<span className="code-green">"something useful"</span>))</pre><div className="terminal-output"><span className="terminal-prompt">➜</span> {codeOutput ? "Shipping: something useful 🚀" : "Click run to execute this demo"}</div><div className="workspace-actions"><button className="button button-primary small" onClick={() => setCodeOutput(true)}><Play size={14} fill="currentColor" /> Run demo</button><button className="button button-ghost small" onClick={() => setCodeOutput(false)}>Reset</button></div></motion.div>}
-                {activeTool === "focus" && <motion.div key="focus" className="lab-content focus-content" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }}><div className="workspace-top"><span><Zap size={15} /> focus-mode.exe</span><span className="file-language">FLOW</span></div><div className="focus-orb"><motion.div animate={{ scale: [1, 1.12, 1], opacity: [.6, 1, .6] }} transition={{ duration: 3, repeat: Infinity }} /><MousePointer2 size={26} /></div><h3>One thing at a time.</h3><p>Reduce the noise. Pick one task. Make the next small move.</p><div className="focus-steps"><span><Check size={14} /> Choose a goal</span><span><Check size={14} /> Work in small steps</span><span><Check size={14} /> Ship, then improve</span></div></motion.div>}
-                {activeTool === "manifesto" && <motion.div key="manifesto" className="lab-content manifesto-content" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }}><div className="workspace-top"><span><Rocket size={15} /> build-manifesto.md</span><span className="file-language">NOTES</span></div><div className="manifesto-mark">“</div><h3>Make it work.<br />Make it clear.<br /><span className="gradient-text">Make it better.</span></h3><p>Curiosity starts the build. Consistency gets it over the line.</p><div className="manifesto-bottom"><span>PRINCIPLE_001</span><Sparkles size={17} /></div></motion.div>}
-              </AnimatePresence>
-            </div>
-          </Reveal>
-        </section>
-
-        <section className="contact-section" id="contact"><div className="section-wrap contact-wrap"><Reveal><div className="section-kicker"><span>CONTACT</span><span className="kicker-line" /></div><div className="contact-grid"><div><h2>Have an idea?<br /><span className="gradient-text">Let's make it real.</span></h2><p>Open to entry-level developer opportunities, collaborations, and interesting problems to solve.</p><div className="contact-buttons"><a className="button button-primary" href="mailto:ramsivaji0@gmail.com">Send me an email <ArrowUpRight size={16} /></a><button className="button button-ghost" onClick={copyEmail}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Copied!" : "Copy email"}</button></div></div><div className="contact-card"><div className="contact-card-top"><span className="status-dot" /> CURRENTLY OPEN TO WORK</div><div className="contact-detail"><span className="contact-detail-icon"><Mail size={18} /></span><div><small>EMAIL</small><strong>ramsivaji0@gmail.com</strong></div><button onClick={copyEmail} aria-label="Copy email">{copied ? <Check size={16} /> : <Copy size={16} />}</button></div><a className="contact-detail contact-link" href="https://github.com/ramsivaji" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Github size={18} /></span><div><small>GITHUB</small><strong>github.com/ramsivaji</strong></div><ArrowUpRight size={16} /></a><a className="contact-detail contact-link" href="https://www.linkedin.com/in/rama-sivaji-kaisarlla/" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Linkedin size={18} /></span><div><small>LINKEDIN</small><strong>Rama Sivaji Kaisarlla</strong></div><ArrowUpRight size={16} /></a></div></div></Reveal></div></section>
+        <section className="contact-section" id="contact"><div className="section-wrap contact-wrap"><Reveal><div className="section-kicker"><span>CONTACT</span><span className="kicker-line" /></div><div className="contact-grid"><div><h2>Have an idea?<br /><span className="gradient-text">Let's make it real.</span></h2><p>I’m looking for my first full-time Python backend role. Get in touch to discuss an opening or one of my projects.</p><div className="contact-buttons"><a className="button button-primary" href="mailto:ramsivaji0@gmail.com">Send me an email <ArrowUpRight size={16} /></a><button className="button button-ghost" onClick={copyEmail}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Copied!" : "Copy email"}</button></div></div><div className="contact-card"><div className="contact-card-top"><span className="status-dot" /> CURRENTLY OPEN TO WORK</div><div className="contact-detail"><span className="contact-detail-icon"><Mail size={18} /></span><div><small>EMAIL</small><strong>ramsivaji0@gmail.com</strong></div><button onClick={copyEmail} aria-label="Copy email">{copied ? <Check size={16} /> : <Copy size={16} />}</button></div><a className="contact-detail contact-link" href="https://github.com/ramsivaji" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Github size={18} /></span><div><small>GITHUB</small><strong>github.com/ramsivaji</strong></div><ArrowUpRight size={16} /></a><a className="contact-detail contact-link" href="https://www.linkedin.com/in/rama-sivaji-kaisarlla/" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Linkedin size={18} /></span><div><small>LINKEDIN</small><strong>Rama Sivaji Kaisarlla</strong></div><ArrowUpRight size={16} /></a></div></div></Reveal></div></section>
       </main>
-      <footer className="footer section-wrap"><a className="brand" href="#home"><span className="brand-mark">RS</span><span>Rama Sivaji</span></a><span>Designed & built with curiosity <span className="footer-heart">✦</span></span><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
+      <footer className="footer section-wrap"><a className="brand" href="#home"><span className="brand-mark">RS</span><span>Rama Sivaji</span></a><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
     </div>
   );
 }

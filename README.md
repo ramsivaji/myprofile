@@ -1,37 +1,25 @@
 # Rama Sivaji — React Portfolio
 
-A responsive, animated personal portfolio built with React, Vite, Framer Motion and Lucide icons.
+A frontend portfolio for a computer science graduate seeking an entry-level Python backend role. Built with React, Vite, Framer Motion, and Lucide.
 
-## Features
-- Animated hero illustration with floating technology chips and rotating orbits
-- Scroll progress indicator, ambient gradients, moving technology ticker
-- Responsive navigation and light/dark theme toggle
-- Skills cards and filterable project gallery, including the ESP32-CAM Car project under Embedded / IoT
-- Career timeline
-- Interactive developer lab with code demo, focus mode and build manifesto
-- Copy-email interaction and contact links
-- Reduced-motion accessibility support
+## Local development
 
-## Run locally
-1. Install Node.js (LTS).
-2. Extract this ZIP and open the project folder in VS Code.
-3. Open a terminal in the project folder and run:
-   ```bash
-   npm install
-   npm run dev
-   ```
-4. Open the local URL printed by Vite.
+Use Node.js 24. From the repository root, run:
 
-## Before publishing
-Contact details and the verified public GitHub repository links have been added. Two projects are listed from the resume without a repository link because a matching public repository was not verified. Review the details before publishing.
+```sh
+npm ci
+npm run dev
+```
 
-## Build
-```bash
+## Netlify
+
+For Git-based deployments, use the repository root as the base directory. The included `netlify.toml` configures Node.js 24, runs `npm run build`, and publishes `dist`. Section links use URL fragments. The portfolio runs as static files with no backend or API credentials.
+
+To preview the production build locally:
+
+```sh
 npm run build
 npm run preview
 ```
 
-## Deploy
-You can deploy the built `dist` folder to Netlify or Vercel. Import the project repository and use:
-- Build command: `npm run build`
-- Publish/output directory: `dist`
+For a manual Netlify deployment, upload the generated `dist` folder.
