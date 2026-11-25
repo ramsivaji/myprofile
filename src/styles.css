@@ -163,3 +163,7 @@ h2 span, .text-link, .project-link, .timeline-client { color: var(--accent); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+.certification-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; margin: 16px 0 0; padding: 0; list-style: none; }
+.certification-list li { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.certification-list strong { display: block; color: var(--ink); }
+.certification-list span { font-size: .875rem; }

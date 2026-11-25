@@ -8,6 +8,16 @@ import {
 } from "lucide-react";
 import "./styles.css";
 
+const linkedInUrl = "https://www.linkedin.com/in/rama-sivaji-kaisarlla/";
+const certifications = [
+  { title: "AWS Educate Machine Learning Foundations – Training Badge", issuer: "Amazon Web Services (AWS)", date: "Dec 2025" },
+  { title: "Deloitte Australia – Data Analytics Job Simulation", issuer: "Forage", date: "Jul 2025" },
+  { title: "Deloitte Australia – Technology Job Simulation", issuer: "Forage", date: "Jul 2025" },
+  { title: "Tata – GenAI Powered Data Analytics Job Simulation", issuer: "Forage", date: "Jul 2025" },
+  { title: "PMKVY 4.0 – Skill India Certificate (Python Programming / Web Development)", issuer: "Skill India" },
+  { title: "Python Frameworks and Django for Beginners", issuer: "Udemy" }
+];
+
 const projects = [
   {
     number: "01", cover: "CarePoint", title: "Hospital Appointment & Patient Management", type: "BACKEND / REST API",
@@ -222,10 +232,23 @@ function App() {
             <Reveal delay={.1} className="timeline-item"><div className="timeline-marker"><span /></div><div className="timeline-date">DEC 2025 — MAR 2026</div><div className="timeline-main"><div><h3>Research Analyst Intern</h3><p className="timeline-org">Concentrix &nbsp;·&nbsp; <span className="timeline-client">Procore</span> &nbsp;·&nbsp; Hyderabad</p></div><span className="timeline-pill">INTERNSHIP</span></div><ul className="timeline-bullets"><li>Updated and maintained client information in Salesforce CRM for the Procore client.</li><li>Reviewed and verified client records to ensure data accuracy, consistency, and completeness.</li><li>Organized and managed CRM data to support efficient record keeping and client information management.</li></ul></Reveal>
             <Reveal delay={.12} className="timeline-item"><div className="timeline-marker"><span /></div><div className="timeline-date">SEP 2021 — JUL 2025</div><div className="timeline-main"><div><h3>B.Tech — Computer Science Engineering (AI & ML)</h3><p className="timeline-org">Malla Reddy College of Engineering · CGPA 7.0</p></div><span className="timeline-pill">EDUCATION</span></div><p className="timeline-description">Sri Chaitanya Junior College (693 marks, 2019–2021) · Jasmine High School (CGPA 8.0, 2018–2019).</p></Reveal>
           </div>
-          <div className="certifications-strip"><span className="certification-label">CERTIFICATIONS</span><span>PMKVY 4.0 – Skill India Certificate (Python Programming / Web Development)</span><span>Udemy – Python Frameworks and Django for Beginners</span></div>
+          <section className="certifications-strip" id="certifications" aria-labelledby="certifications-heading">
+            <div className="section-heading-row">
+              <h2 id="certifications-heading">Certifications<span>.</span></h2>
+              <a className="text-link" href={linkedInUrl} target="_blank" rel="noreferrer"><Linkedin size={17} /> LinkedIn profile</a>
+            </div>
+            <ul className="certification-list">
+              {certifications.map(({ title, issuer, date }) => (
+                <li key={title}>
+                  <strong>{title}</strong>
+                  <span>{issuer}{date && ` · ${date}`}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
         </section>
 
-        <section className="contact-section" id="contact"><div className="section-wrap contact-wrap"><Reveal><div className="section-kicker"><span>CONTACT</span><span className="kicker-line" /></div><div className="contact-grid"><div><h2>Have an idea?<br /><span className="gradient-text">Let's make it real.</span></h2><p>I’m looking for my first full-time Python backend role. Get in touch to discuss an opening or one of my projects.</p><div className="contact-buttons"><a className="button button-primary" href="mailto:ramsivaji0@gmail.com">Send me an email <ArrowUpRight size={16} /></a><button className="button button-ghost" onClick={copyEmail}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Copied!" : "Copy email"}</button></div></div><div className="contact-card"><div className="contact-card-top"><span className="status-dot" /> CURRENTLY OPEN TO WORK</div><div className="contact-detail"><span className="contact-detail-icon"><Mail size={18} /></span><div><small>EMAIL</small><strong>ramsivaji0@gmail.com</strong></div><button onClick={copyEmail} aria-label="Copy email">{copied ? <Check size={16} /> : <Copy size={16} />}</button></div><a className="contact-detail contact-link" href="https://github.com/ramsivaji" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Github size={18} /></span><div><small>GITHUB</small><strong>github.com/ramsivaji</strong></div><ArrowUpRight size={16} /></a><a className="contact-detail contact-link" href="https://www.linkedin.com/in/rama-sivaji-kaisarlla/" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Linkedin size={18} /></span><div><small>LINKEDIN</small><strong>Rama Sivaji Kaisarlla</strong></div><ArrowUpRight size={16} /></a></div></div></Reveal></div></section>
+        <section className="contact-section" id="contact"><div className="section-wrap contact-wrap"><Reveal><div className="section-kicker"><span>CONTACT</span><span className="kicker-line" /></div><div className="contact-grid"><div><h2>Have an idea?<br /><span className="gradient-text">Let's make it real.</span></h2><p>I’m looking for my first full-time Python backend role. Get in touch to discuss an opening or one of my projects.</p><div className="contact-buttons"><a className="button button-primary" href="mailto:ramsivaji0@gmail.com">Send me an email <ArrowUpRight size={16} /></a><button className="button button-ghost" onClick={copyEmail}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? "Copied!" : "Copy email"}</button></div></div><div className="contact-card"><div className="contact-card-top"><span className="status-dot" /> CURRENTLY OPEN TO WORK</div><div className="contact-detail"><span className="contact-detail-icon"><Mail size={18} /></span><div><small>EMAIL</small><strong>ramsivaji0@gmail.com</strong></div><button onClick={copyEmail} aria-label="Copy email">{copied ? <Check size={16} /> : <Copy size={16} />}</button></div><a className="contact-detail contact-link" href="https://github.com/ramsivaji" target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Github size={18} /></span><div><small>GITHUB</small><strong>github.com/ramsivaji</strong></div><ArrowUpRight size={16} /></a><a className="contact-detail contact-link" href={linkedInUrl} target="_blank" rel="noreferrer"><span className="contact-detail-icon"><Linkedin size={18} /></span><div><small>LINKEDIN</small><strong>Rama Sivaji Kaisarlla</strong></div><ArrowUpRight size={16} /></a></div></div></Reveal></div></section>
       </main>
       <footer className="footer section-wrap"><a className="brand" href="#home"><span className="brand-mark">RS</span><span>Rama Sivaji</span></a><a href="#home" className="back-top">BACK TO TOP ↑</a></footer>
     </div>
